@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/28 16:54:52 by kimkwanho         #+#    #+#             */
-/*   Updated: 2020/10/01 16:39:52 by kimkwanho        ###   ########.fr       */
+/*   Created: 2021/03/23 14:02:14 by kimkwanho         #+#    #+#             */
+/*   Updated: 2021/03/23 14:27:10 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int		ft_isprint(int chr)
+void				ft_signal_handle(int sig)
 {
-	if (chr >= 32 && chr <= 126)
-		return (1);
-	else
-		return (0);
+	if (sig == 2)
+	{
+		ft_util_putstr_fd("\b\b \b\b\n", 1);
+		ft_prompt_put_msg();
+	}
+	if (sig == 2)
+	{
+		ft_util_putstr_fd("\b\b \b\b\n", 1);
+		ft_util_putstr_fd("exit", 1);
+	}
+}
+
+void				ft_signal_set(void)
+{
+	signal(2, ft_signal_handle);
+	signal(15, ft_signal_handle);
 }

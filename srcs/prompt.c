@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mihykim <mihykim@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/01 14:37:53 by mihykim           #+#    #+#             */
-/*   Updated: 2020/03/02 01:15:01 by mihykim          ###   ########.fr       */
+/*   Created: 2021/03/23 14:23:20 by kimkwanho         #+#    #+#             */
+/*   Updated: 2021/03/24 08:29:31 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-/*
-** Counts the number of elements in a list
-*/
+extern t_mns		*mns;
 
-int	ft_lstsize(t_list *lst)
+void				ft_prompt_put_msg(void)
 {
-	size_t	size;
-
-	size = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		size++;
-	}
-	return (size);
+	// printf("%s%s%s", ANSI_RES, mns->pth, ANSI_RES);
+	ft_util_putstr_fd(ANSI_BLU "- [kkim-juhpark]$ " ANSI_RES, 1);
 }
