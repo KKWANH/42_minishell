@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 08:21:38 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/24 08:39:02 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/25 12:54:12 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,3 +57,39 @@ char				*ft_util_strdup(char *src)
 	dest[j] = 0;
 	return (dest);
 }
+
+int					ft_util_is_empty(char c)
+{
+	if (c == '\t' || c == '\n' || c == '\r' ||
+		c == '\v' || c == '\f' || c == ' ')
+		return (1);
+	return (0);
+}
+
+int					ft_util_is_alpha(int chr)
+{
+	if ((chr >= 65 && chr <= 90) || (chr >= 97 && chr <= 122))
+		return (1);
+	else
+		return (0);
+}
+
+int					ft_util_strncmp(const char *s1, const char *s2,
+					unsigned int n)
+{
+	unsigned char	*ss1;
+	unsigned char	*ss2;
+
+	ss1 = (unsigned char *)s1;
+	ss2 = (unsigned char *)s2;
+	while ((*ss1 != 0 || *ss2 != 0) && n != 0)
+	{
+		if (*ss1 != *ss2)
+			return (*ss1 - *ss2);
+		ss1++;
+		ss2++;
+		n--;
+	}
+	return (0);
+}
+

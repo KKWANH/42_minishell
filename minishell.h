@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 10:51:45 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/24 08:28:04 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/25 13:51:00 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,13 @@ typedef struct		s_mns
 {
 	int				ctr;
 	char			*pth;
+	int				exit_code;
 	t_env			*env;
+	char			**env_str;
 }					t_mns;
 
 /*
-** get_next_line.c
+** gnl.c
 */
 int					get_next_line(int file, char **line);
 
@@ -59,7 +61,8 @@ int					get_next_line(int file, char **line);
 */
 char				*ft_env_name(char *str);
 char				*ft_env_value(char *str);
-t_env				*ft_env_init(char **env);
+t_env				*ft_env_init(void);
+void				ft_env_cmd(void);
 
 /*
 ** util_env1.c
@@ -71,13 +74,29 @@ void				ft_util_env_lstaddback(t_env **env, t_env *new);
 /*
 ** signal.c
 */
-void				ft_signal_handle(int sig);
+void				ft_signal_handle_c(int sig);
+void				ft_signal_handle_rvc_slash(int sig);
 void				ft_signal_set(void);
 
 /*
 ** prompt.c
 */
 void				ft_prompt_put_msg(void);
+
+/*
+** parse.c
+*/
+void				ft_parse(char *lin);
+
+/*
+** exit.c
+*/
+void				ft_exit_cmd(void);
+
+/*
+** export.c
+*/
+int					ft_export_cmd(char *lin);
 
 /*
 ** util1.c
@@ -93,5 +112,22 @@ char				*ft_util_strnstr(const char *hay, const char *ndl, size_t len);
 */
 char				*ft_util_strjoin(char const *s1, char const *s2);
 char				*ft_util_strdup(char *src);
+int					ft_util_is_empty(char c);
+int					ft_util_is_alpha(int chr);
+int					ft_util_strncmp(const char *s1, const char *s2,
+					unsigned int n);
+
+/*
+** util3.c
+*/
+int					ft_util_is_ascii(int chr);
+char				**ft_util_split_ufailed(char **res, int num);
+char				*ft_util_split_input(char *res, char *s, char c);
+int 				ft_util_split_count(char *s, char c);
+char				**ft_util_split(char const *s, char c);
+
+/*
+** util4.c
+*/
 
 #endif
