@@ -6,13 +6,13 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 14:23:20 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/25 13:54:24 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/26 08:53:16 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-extern t_mns		*mns;
+extern t_mns		*g_mns;
 
 void				ft_prompt_put_msg(void)
 {

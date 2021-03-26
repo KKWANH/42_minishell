@@ -6,13 +6,13 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 15:35:02 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/25 13:35:02 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/26 09:10:44 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-extern t_mns		*mns;
+extern t_mns		*g_mns;
 
 int					ft_export_getname_eqr(char *lin, int *mlc, int *stt)
 {
@@ -70,9 +70,7 @@ int					ft_export_getvalue_eqr(char *lin, int *mlc, int *stt)
 		(lin[idx] == 'e' && lin[idx + 1] == 'x' && lin[idx + 2] == 'p' &&
 		lin[idx + 3] == 'o' && lin[idx + 4] == 'r' && lin[idx + 5] == 't'))
 		idx += 6;
-	while (ft_util_is_empty(lin[idx]))
-		++idx;
-	while (ft_util_is_alpha(lin[idx]) || lin[idx] == '_')
+	while (ft_util_is_empty(lin[idx]) || ft_util_is_export(lin[idx]))
 		++idx;
 	if (lin[idx] != '=' || ft_util_is_empty(lin[idx + 1]))
 		return (0);
@@ -119,7 +117,7 @@ int					ft_export_cmd(char *lin)
 	if (!(val = ft_export_getvalue(lin)))
 		return (0);
 	new = ft_util_env_lstnew(nam, val);
-	tmp = mns->env;
+	tmp = g_mns->env;
 	while (tmp)
 	{
 		if (ft_util_strncmp(tmp->nam, new->nam, ft_util_strlen(new->nam)) == 0)

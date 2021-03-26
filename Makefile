@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/03/25 13:59:22 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/03/26 08:48:41 by kimkwanho        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,11 @@ SRCS		=	srcs/gnl.c \
 				srcs/util2.c \
 				srcs/util3.c \
 				srcs/util4.c
+
 OBJS		=	${SRCS:.c=.o}
 
 CC			=	gcc
 CCFLAGS		=	-Wall -Wextra -Werror
-# LIBFT		=	-L ./libft -lft
 
 RM			=	rm -f
 

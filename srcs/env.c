@@ -6,13 +6,13 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 13:42:52 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/25 13:58:23 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/26 09:14:16 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-extern t_mns		*mns;
+extern t_mns		*g_mns;
 
 char				*ft_env_name(char *str)
 {
@@ -59,12 +59,12 @@ t_env				*ft_env_init(void)
 	int				idx;
 
 	rst = ft_util_env_lstnew(
-		ft_env_name(mns->env_str[0]), ft_env_value(mns->env_str[0]));
+		ft_env_name(g_mns->env_str[0]), ft_env_value(g_mns->env_str[0]));
 	idx = 1;
-	while (mns->env_str[idx])
+	while (g_mns->env_str[idx])
 	{
 		new = ft_util_env_lstnew(
-			ft_env_name(mns->env_str[idx]), ft_env_value(mns->env_str[idx]));
+			ft_env_name(g_mns->env_str[idx]), ft_env_value(g_mns->env_str[idx]));
 		ft_util_env_lstaddback(&rst, new);
 		++idx;
 	}
@@ -73,15 +73,9 @@ t_env				*ft_env_init(void)
 
 void				ft_env_cmd(void)
 {
-	t_env			*tmp;
-
-	tmp = mns->env;
-	while (tmp)
+	while (g_mns->env)
 	{
-		ft_util_putstr_fd(tmp->nam, 1);
-		ft_util_putstr_fd("=", 1);
-		ft_util_putstr_fd(tmp->val, 1);
-		ft_util_putstr_fd("\n", 1);
-		tmp = tmp->nxt;
+		printf("%s = %s\n", g_mns->env->nam, g_mns->env->val);
+		g_mns->env = g_mns->env->nxt;
 	}
 }
