@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 10:51:23 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/26 08:54:09 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/27 22:50:14 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int					main(int arc, char **arv, char **env)
 		rst = get_next_line(0, &lin);
 		if (rst >= 0)
 			ft_parse(lin);
+		free(lin);
+		lin = 0;
 	}
 	return (0);
-	
 }

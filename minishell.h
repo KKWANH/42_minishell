@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 10:51:45 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/26 09:11:00 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/27 22:46:37 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,6 @@ char				**ft_util_split(char const *s, char c);
 ** util4.c
 */
 int					ft_util_is_export(char chr);
+void				ft_util_freestrstr(char **str);
 
 #endif

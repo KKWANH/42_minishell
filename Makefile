@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/03/26 08:48:41 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/03/27 22:55:49 by kimkwanho        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,5 +52,10 @@ clean :
 fclean : clean
 		@echo "\033[33m[Fclean minishell...]\033[0m"
 		${RM} ${NAME}
+
+run : all
+		@echo "\033[33m[Minishell start!]\033[0m"
+		@echo "\033[33m---------------------------------------\033[0m"
+		./$(NAME)
 
 re : fclean all

@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/26 08:54:45 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/27 22:52:29 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,21 @@ void				ft_parse(char *lin)
 {
 	char			**par;
 	char			*bin;
-	int				rst;
 	pid_t			pid;
+	int				rst;
 	int				sta;
 
-	bin = ft_util_strdup("/bin/");
-	par = ft_util_split(lin, ' ');
 	pid = fork();
 	if (pid == 0)
 	{
-		if (ft_util_strnstr(lin, "exit", ft_util_strlen(lin)))
-			ft_exit_cmd();
+		bin = ft_util_strdup("/bin/");
+		par = ft_util_split(lin, ' ');
+		free(bin);
 		rst = execve(ft_util_strjoin(bin, par[0]), par, g_mns->env_str);
+		// if (rst == -1)
+		// 	exit(0); //원래 오류 넣어야 하는데
+		ft_util_freestrstr(par);
+		exit(0);
 	}
 	else if (pid > 0)
 	{

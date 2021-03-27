@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 13:42:52 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/26 09:14:16 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/27 22:47:35 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,12 @@ t_env				*ft_env_init(void)
 
 void				ft_env_cmd(void)
 {
-	while (g_mns->env)
+	t_env			*tmp;
+
+	tmp = g_mns->env;
+	while (tmp)
 	{
-		printf("%s = %s\n", g_mns->env->nam, g_mns->env->val);
-		g_mns->env = g_mns->env->nxt;
+		printf("%s = %s\n", tmp->nam, tmp->val);
+		tmp = tmp->nxt;
 	}
 }
