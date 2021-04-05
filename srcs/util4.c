@@ -6,11 +6,13 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 09:05:10 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/27 22:46:48 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/31 23:15:00 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+extern t_mns		*g_mns;
 
 int					ft_util_is_export(char chr)
 {
@@ -47,4 +49,21 @@ void				ft_util_freestrstr(char **str)
 	while (str[idx])
 		free(str[idx++]);
 	free(str);
+}
+
+t_cmd				*ft_util_cmd_lstlast(t_cmd *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->nxt)
+		lst = lst->nxt;
+	return (lst);
+}
+
+void				ft_util_cmd_lstaddback(t_cmd *cmd)
+{
+	if (!(g_mns->cmd))
+		g_mns->cmd = cmd;
+	else
+		(ft_util_cmd_lstlast(g_mns->cmd))->nxt = cmd;
 }

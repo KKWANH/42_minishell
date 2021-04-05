@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/03/27 22:55:49 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/04/05 09:12:10 by kimkwanho        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS		=	srcs/gnl.c \
 				srcs/signal.c \
 				srcs/prompt.c \
 				srcs/parse.c \
+				srcs/process.c \
 				srcs/exit.c \
 				srcs/export.c \
 				srcs/util1.c \

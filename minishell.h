@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 10:51:45 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/27 22:46:37 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/05 09:18:57 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@
 # define ANSI_CYA	"\x1b[36m"
 # define ANSI_RES	"\x1b[0m"
 
+typedef struct		s_cmd
+{
+	char			*lin;
+	char			*cmd;
+	int				stt;
+	int				is_finish;
+	struct s_cmd	*nxt;
+}					t_cmd;
 
 typedef struct		s_env
 {
@@ -46,9 +54,11 @@ typedef struct		s_mns
 {
 	int				ctr;
 	char			*pth;
+	char			*tmp_char;
 	int				exit_code;
 	t_env			*env;
 	char			**env_str;
+	t_cmd			*cmd;
 }					t_mns;
 
 /*
@@ -87,6 +97,11 @@ void				ft_prompt_put_msg(void);
 ** parse.c
 */
 void				ft_parse(char *lin);
+
+/*
+** process.c
+*/
+int					ft_process();
 
 /*
 ** exit.c
@@ -131,5 +146,8 @@ char				**ft_util_split(char const *s, char c);
 */
 int					ft_util_is_export(char chr);
 void				ft_util_freestrstr(char **str);
+int					ft_util_strcmp(char *s1, char *s2);
+t_cmd				*ft_util_cmd_lstlast(t_cmd *lst);
+void				ft_util_cmd_lstaddback(t_cmd *cmd);
 
 #endif

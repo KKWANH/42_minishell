@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 14:02:14 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/26 08:51:47 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/03/31 10:01:27 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,14 @@ void				ft_signal_handle_rvc_slash(int sig)
 	int				pid;
 
 	pid = waitpid(0, &sta, WNOHANG);
-	if (sig == 3)
+	if (pid == -1)
+		ft_util_putstr_fd("\b\b \b\b\n", 1);
+	else
 	{
-		if (pid == -1)
-			ft_util_putstr_fd("\b\b \b\b\n", 1);
-		else
-		{
-			ft_util_putstr_fd("Quit: 3\n", 1);
-			g_mns->exit_code = 131;
-		}
+		signal(sig, SIG_DFL);
+		ft_util_putstr_fd("Quit: 3\n", 1);
+		g_mns->exit_code = 131;
+		signal(3, ft_signal_handle_rvc_slash);
 	}
 }
 
