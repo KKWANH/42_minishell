@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 09:05:10 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/31 23:15:00 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/08 17:12:52 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,14 @@ t_cmd				*ft_util_cmd_lstlast(t_cmd *lst)
 
 void				ft_util_cmd_lstaddback(t_cmd *cmd)
 {
+	t_cmd			*tmp;
+
+	tmp = ft_util_cmd_lstlast(g_mns->cmd);
 	if (!(g_mns->cmd))
 		g_mns->cmd = cmd;
 	else
+	{
 		(ft_util_cmd_lstlast(g_mns->cmd))->nxt = cmd;
+		(ft_util_cmd_lstlast(g_mns->cmd))->pre = tmp;
+	}
 }

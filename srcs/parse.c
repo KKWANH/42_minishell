@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/05 09:18:46 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/08 17:05:41 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,48 @@
 
 extern t_mns		*g_mns;
 
-void				print_cmd(void)
-{
-	t_cmd			*tmp;
-
-	tmp = g_mns->cmd;
-	printf("-----------\n");
-	while (tmp)
-	{
-		printf("[%s]:[%s]\n", tmp->cmd, tmp->lin);
-		if (tmp->nxt)
-			tmp = tmp->nxt;
-		else
-			break ;
-	}
-	printf("-----------\n");
-}
-
-int					ft_parse_switch(char *lin)
+int					ft_parse_cmd(char *lin)
 {
 	t_cmd			*cmd;
 	int				tm1;
 	int				tm2;
+	int				idx;
 
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	cmd->lin = lin;
-	cmd->stt = 0;
+	idx = 0;
 	tm2 = 0;
-	while (ft_util_is_empty(cmd->lin[cmd->stt]) == 1)
-		++cmd->stt;
-	tm1 = cmd->stt;
+	while (ft_util_is_empty(cmd->lin[idx]) == 1)
+		++idx;
+	tm1 = idx;
 	while (ft_util_is_alpha(cmd->lin[tm1]) == 1)
 		++tm1;
-	if (!(cmd->cmd = (char *)malloc(sizeof(char) * (tm1 - cmd->stt))))
+	if (!(cmd->cmd = (char *)malloc(sizeof(char) * (tm1 - idx))))
 		return (0);
-	while (tm2 < (tm1 - cmd->stt))
+	while (tm2 < (tm1 - idx))
 	{
-		cmd->cmd[tm2] = cmd->lin[cmd->stt + tm2];
+		cmd->cmd[tm2] = cmd->lin[idx + tm2];
 		++tm2;
 	}
-	while (ft_util_is_alpha(cmd->lin[cmd->stt]) == 1 ||
-		ft_util_is_empty(cmd->lin[cmd->stt]) == 1)
-		++cmd->stt;
+	while (ft_util_is_alpha(cmd->lin[idx]) == 1)
+		++idx;
+	while (ft_util_is_empty(cmd->lin[idx]) == 1)
+		++idx;
+	tm1 = 0;
+	tm2 = idx;
+	while (cmd->lin[idx])
+	{
+		++idx;
+		++tm1;
+	}
+	idx = 0;
+	if (!(cmd->arg = (char *)malloc(sizeof(char) * tm1)))
+		return (0);
+	while (idx < tm1)
+	{
+		cmd->arg[idx] = cmd->lin[tm2 + idx];
+		++idx;
+	}
 	ft_util_cmd_lstaddback(cmd);
 	return (1);
 }
@@ -82,8 +82,8 @@ void				ft_parse(char *lin)
 	}
 	else if (pid > 0)
 	{
-		ft_parse_switch(lin);
-		if (ft_process() == 0)
+		ft_parse_cmd(lin);
+		if (ft_process() == -1)
 			ft_exit_cmd();
 		waitpid(pid, &sta, 0);
 	}

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/17 10:51:45 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/05 09:18:57 by kimkwanho        ###   ########.fr       */
+/*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
+/*   Updated: 2021/04/09 09:41:27 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 /*
 ** includes
 */
+
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -25,6 +26,14 @@
 # include <sys/resource.h>
 # include <sys/stat.h>
 # include <signal.h>
+# include <term.h>
+# include <termios.h>
+# include <curses.h>
+# include <termcap.h>
+
+/*
+** color codes
+*/
 
 # define ANSI_RED	"\x1b[31m"
 # define ANSI_GRE	"\x1b[32m"
@@ -34,14 +43,21 @@
 # define ANSI_CYA	"\x1b[36m"
 # define ANSI_RES	"\x1b[0m"
 
-typedef struct		s_cmd
-{
-	char			*lin;
-	char			*cmd;
-	int				stt;
-	int				is_finish;
-	struct s_cmd	*nxt;
-}					t_cmd;
+/*
+** key codes
+*/
+
+# define CTRL_D 4
+# define ENTER 10
+# define BACKSPACE 127
+# define LEFT_ARROW 4479771
+# define RIGHT_ARROW 4414235
+# define UP_ARROW 4283163
+# define DOWN_ARROW 4348699
+
+/*
+** structs
+*/
 
 typedef struct		s_env
 {
@@ -50,24 +66,43 @@ typedef struct		s_env
 	struct s_env	*nxt;
 }					t_env;
 
+typedef struct		s_cmd
+{
+	char			*lin;
+	char			*cmd;
+	char			*arg;
+	struct s_cmd	*pre;
+	struct s_cmd	*nxt;
+}					t_cmd;
+
 typedef struct		s_mns
 {
-	int				ctr;
-	char			*pth;
-	char			*tmp_char;
-	int				exit_code;
-	t_env			*env;
+	struct s_env	*env;
 	char			**env_str;
-	t_cmd			*cmd;
+	char			*pth;
+	int				ext;
+	char			*tmp;
+	struct s_cmd	*cmd;
 }					t_mns;
 
 /*
-** gnl.c
+** functions - init.c
 */
-int					get_next_line(int file, char **line);
+void				ft_init_term_set(void);
+void				ft_init(char **str);
 
 /*
-** env.c
+** functions - gnl.c
+*/
+int					get_next_line(int fil, char **lin);
+
+/*
+** functions - signal.c
+*/
+void				ft_signal_set(void);
+
+/*
+** functions - env.c
 */
 char				*ft_env_name(char *str);
 char				*ft_env_value(char *str);
@@ -75,46 +110,35 @@ t_env				*ft_env_init(void);
 void				ft_env_cmd(void);
 
 /*
-** util_env1.c
+** functions - util_env.c
 */
 t_env				*ft_util_env_lstnew(char *nam, char *val);
 t_env				*ft_util_env_lstlast(t_env *lst);
 void				ft_util_env_lstaddback(t_env **env, t_env *new);
 
 /*
-** signal.c
-*/
-void				ft_signal_handle_c(int sig);
-void				ft_signal_handle_rvc_slash(int sig);
-void				ft_signal_set(void);
-
-/*
-** prompt.c
+** functions - prompt.c
 */
 void				ft_prompt_put_msg(void);
 
 /*
-** parse.c
+** functions - parse.c
 */
+int					ft_parse_cmd(char *lin);
 void				ft_parse(char *lin);
 
 /*
-** process.c
+** functions - process.c
 */
-int					ft_process();
+int					ft_process(void);
 
 /*
-** exit.c
+** functions - exit.c
 */
 void				ft_exit_cmd(void);
 
 /*
-** export.c
-*/
-int					ft_export_cmd(char *lin);
-
-/*
-** util1.c
+** functions - util1.c
 */
 int					ft_util_strchr(const char *str, int chr);
 int					ft_util_strlen(char *str);
@@ -123,7 +147,7 @@ char				ft_util_ndlchk(const char *hay, const char *ndl, size_t len);
 char				*ft_util_strnstr(const char *hay, const char *ndl, size_t len);
 
 /*
-** util2.c
+** functions - util2.c
 */
 char				*ft_util_strjoin(char const *s1, char const *s2);
 char				*ft_util_strdup(char *src);
@@ -133,7 +157,7 @@ int					ft_util_strncmp(const char *s1, const char *s2,
 					unsigned int n);
 
 /*
-** util3.c
+** functions - util3.c
 */
 int					ft_util_is_ascii(int chr);
 char				**ft_util_split_ufailed(char **res, int num);
@@ -142,12 +166,17 @@ int 				ft_util_split_count(char *s, char c);
 char				**ft_util_split(char const *s, char c);
 
 /*
-** util4.c
+** functions - util4.c
 */
 int					ft_util_is_export(char chr);
 void				ft_util_freestrstr(char **str);
 int					ft_util_strcmp(char *s1, char *s2);
 t_cmd				*ft_util_cmd_lstlast(t_cmd *lst);
 void				ft_util_cmd_lstaddback(t_cmd *cmd);
+
+/*
+** functions - util5.c
+*/
+char				*ft_util_chajoin(char *line, char c);
 
 #endif

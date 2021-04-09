@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 13:43:01 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/03/24 08:16:15 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/08 15:26:03 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int					ft_util_strchr(const char *str, int chr)
 	if (!str || !chr)
 		return (-1);
 	while (str[idx] != '\0')
-	{ 
+	{
 		if (str[idx] == chr)
 			return (idx);
 		++idx;
@@ -33,6 +33,8 @@ int					ft_util_strlen(char *str)
 	int				cnt;
 
 	cnt = 0;
+	if (str == NULL)
+		return (0);
 	while (str[cnt])
 		++cnt;
 	return (cnt);

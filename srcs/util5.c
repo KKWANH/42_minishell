@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   util5.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/08 15:40:05 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/08 15:40:12 by kimkwanho        ###   ########.fr       */
+/*   Created: 2021/04/09 09:41:06 by kimkwanho         #+#    #+#             */
+/*   Updated: 2021/04/09 09:41:11 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-extern t_mns		*g_mns;
-
-void				ft_prompt_put_msg(void)
+char				*ft_util_chajoin(char *line, char c)
 {
-	// printf("%s%s%s", ANSI_RES, mns->pth, ANSI_RES);
-	ft_util_putstr_fd(ANSI_BLU "- [kkim-juhpark]$ " ANSI_RES, 1);
+	char			*str;
+	int				i;
+
+	if (line == 0 && c == 0)
+		return (0);
+	if ((str = (char*)malloc(sizeof(char) * (ft_util_strlen(line) + 2))) == 0)
+		return (0);
+	i = 0;
+	while (line[i])
+	{
+		str[i] = line[i];
+		i++;
+	}
+	free(line);
+	str[i] = c;
+	str[++i] = 0;
+	return (str);
 }

@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/04/05 09:12:10 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/04/09 09:42:10 by kimkwanho        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,19 +14,21 @@ NAME		=	minishell
 
 MAIN		=	minishell.c
 
-SRCS		=	srcs/gnl.c \
-				srcs/env.c \
-				srcs/util_env1.c \
-				srcs/signal.c \
-				srcs/prompt.c \
-				srcs/parse.c \
-				srcs/process.c \
+SRCS		=	srcs/env.c \
 				srcs/exit.c \
 				srcs/export.c \
+				srcs/gnl.c \
+				srcs/init.c \
+				srcs/parse.c \
+				srcs/process.c \
+				srcs/prompt.c \
+				srcs/signal.c \
+				srcs/util_env.c \
 				srcs/util1.c \
 				srcs/util2.c \
 				srcs/util3.c \
-				srcs/util4.c
+				srcs/util4.c \
+				srcs/util5.c
 
 OBJS		=	${SRCS:.c=.o}
 
@@ -34,6 +36,7 @@ CC			=	gcc
 CCFLAGS		=	-Wall -Wextra -Werror
 
 RM			=	rm -f
+MCHECK		=	-fsanitize=address
 
 all : ${NAME}
 
