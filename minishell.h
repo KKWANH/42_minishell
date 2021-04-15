@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/09 09:41:27 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/15 11:59:38 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,30 @@ typedef struct		s_env
 	struct s_env	*nxt;
 }					t_env;
 
+typedef struct		s_str
+{
+	char			*str;
+	struct s_str	*nxt;
+}					t_str;
+
 typedef struct		s_cmd
 {
 	char			*lin;
-	char			*cmd;
 	char			*arg;
+	char			*cmd;
+	struct s_str	*spl;
 	struct s_cmd	*pre;
 	struct s_cmd	*nxt;
 }					t_cmd;
+
+typedef struct		s_cap
+{
+	char			*cm;
+	char			*ce;
+	char			*dc;
+	int				p_row;
+	int				p_col;
+}					t_cap;
 
 typedef struct		s_mns
 {
@@ -82,14 +98,19 @@ typedef struct		s_mns
 	char			*pth;
 	int				ext;
 	char			*tmp;
+	int				idx;
+	char			*lin;
 	struct s_cmd	*cmd;
+	struct s_cap	cap; 
 }					t_mns;
 
 /*
 ** functions - init.c
 */
-void				ft_init_term_set(void);
-void				ft_init(char **str);
+t_cap				ft_init_term_set
+	(t_cap cap, struct termios *s_term, struct termios *s_backup);
+void				ft_init
+	(char **str, struct termios *s_term, struct termios *s_backup);
 
 /*
 ** functions - gnl.c
@@ -117,12 +138,26 @@ t_env				*ft_util_env_lstlast(t_env *lst);
 void				ft_util_env_lstaddback(t_env **env, t_env *new);
 
 /*
+** functions - cursor.c
+*/
+void				ft_cursor_whereisit(int *col, int *row);
+void				ft_cursor_read_eof(char *lin);
+int					ft_cursor(int *col, int *row, int tmp);
+
+/*
+** functions - key.c
+*/
+char				*ft_key_backspace(int *col, int *row, char *lin, t_cap *cap);
+void				ft_key_left(int *col, int *row, t_cap *cap);
+void				ft_key_right(int *col, int *row, char *lin, t_cap *cap);
+
+/*
 ** functions - prompt.c
 */
 void				ft_prompt_put_msg(void);
 
 /*
-** functions - parse.c
+** functions - parse1.c
 */
 int					ft_parse_cmd(char *lin);
 void				ft_parse(char *lin);
@@ -131,6 +166,11 @@ void				ft_parse(char *lin);
 ** functions - process.c
 */
 int					ft_process(void);
+
+/*
+** functions - pwd.c
+*/
+void				ft_pwd_cmd(void);
 
 /*
 ** functions - exit.c
@@ -178,5 +218,14 @@ void				ft_util_cmd_lstaddback(t_cmd *cmd);
 ** functions - util5.c
 */
 char				*ft_util_chajoin(char *line, char c);
+int					ft_util_putchar(int tc);
+char				*ft_util_chaout(char *line, int indx);
+int					ft_util_is_num(char chr);
+
+/*
+** functions - util6.c
+*/
+int					ft_util_cal(char *a, int res, int minus);
+int					ft_util_atoi(char *str);
 
 #endif

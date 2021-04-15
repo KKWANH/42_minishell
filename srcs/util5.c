@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 09:41:06 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/09 09:41:11 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/13 19:49:36 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,46 @@ char				*ft_util_chajoin(char *line, char c)
 	str[i] = c;
 	str[++i] = 0;
 	return (str);
+}
+
+int					ft_util_putchar(int tc)
+{
+	write(1, &tc, 1);
+	return (0);
+}
+
+char				*ft_util_chaout(char *line, int indx)
+{
+	char			*str;
+	int				i;
+	int				j;
+	int				len;
+
+	if (line == 0)
+		return (0);
+	len = ft_util_strlen(line);
+	if ((str = (char*)malloc(sizeof(char) * len)) == 0)
+		return (0);
+	i = 0;
+	j = 0;
+	while (i < len)
+	{
+		if (j == indx)
+		{
+			j++;
+			continue ;
+		}
+		str[i++] = line[j++];
+	}
+	free(line);
+	str[i] = 0;
+	return (str);
+}
+
+int					ft_util_is_num(char chr)
+{
+	if (chr >= '0' && chr <= '9')
+		return (1);
+	else
+		return (0);
 }

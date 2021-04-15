@@ -2,51 +2,25 @@
 
 t_mns				*g_mns;
 
-void				ft_minishell_read_eof(char *lin)
-{
-	ft_util_putstr_fd("  \b\b", 1);
-	if (ft_util_strlen(lin) != 0)
-		g_mns->tmp = lin;
-	if (ft_util_strlen(g_mns->tmp) == 0)
-	{
-		printf("exit\n");
-		exit(0);
-	}
-}
 
-void				ft_minishell_main(void)
+void				ft_minishell_input_main(int col, int row, int tmp)
 {
-	char			*lin;
+	char			chr;
 	int				rst;
-	int				tmp;
 
-	lin = ft_util_strdup("");
-	tmp = 0;
-	while ((rst = read(0, &tmp, sizeof(tmp))) > 0)
+	while (read(0, &tmp, sizeof(tmp)) > 0)
 	{
-		if (tmp == LEFT_ARROW)
-			write(1, "    \b\b\b\b", 8);
-		else if (tmp == RIGHT_ARROW)
-			write(1, "    \b\b\b\b", 8);
-		else if (tmp == ENTER)
+		rst = ft_cursor(&col, &row, tmp);
+		if (rst == -1)
+			return ;
+		if (rst == 0)
 		{
-			write(1, "\n", 1);
-			ft_parse(lin);
-			free(lin);
-			lin = ft_util_strdup("");
-			ft_prompt_put_msg();
-		}
-		else if (tmp == CTRL_D)
-		{
-			write(1, "EOF!", 4);
-			exit(0);
-		}
-		else
-		{
+			chr = tmp;
+			if (chr == '\t')
+				continue ;
 			write(0, &tmp, 1);
-			char str;
-			str = tmp;
-			lin = ft_util_chajoin(lin, str);
+			g_mns->lin = ft_util_chajoin(g_mns->lin, chr);
+			++g_mns->idx;
 		}
 		tmp = 0;
 	}
@@ -54,18 +28,24 @@ void				ft_minishell_main(void)
 
 int					main(int arc, char **arv, char **env)
 {
+	struct termios	s_term;
+	struct termios	s_backup;
+
 	if (!(g_mns = (t_mns *)malloc(sizeof(t_mns))))
 		return (-1);
-	ft_init(env);
-	// while (1)
-	// {
-	// 	ft_prompt_put_msg();
-	// 	while (get_next_line(0, &lin) == 0)
-	// 		ft_minishell_read_eof(lin);
-	// 	ft_parse(lin);
-	// 	free(lin);
-	// 	g_mns->tmp = NULL;
-	// }
-	ft_minishell_main();
+	ft_init(env, &s_term, &s_backup);
+	while (1)
+	{
+		ft_prompt_put_msg();
+		// NonCanonical
+		tcsetattr(STDIN_FILENO, TCSANOW, &s_term);
+		ft_cursor_whereisit(&g_mns->cap.p_col, &g_mns->cap.p_row);
+		g_mns->lin = ft_util_strdup("");
+		ft_minishell_input_main(0, 0, 0);
+		// Backup
+		tcsetattr(STDIN_FILENO, TCSANOW, &s_backup);
+		ft_parse(g_mns->lin);
+		free(g_mns->lin);
+	}
 	return (0);
 }

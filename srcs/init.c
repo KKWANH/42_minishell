@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 09:32:16 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/09 09:38:15 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/15 11:54:52 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,24 @@
 
 extern t_mns		*g_mns;
 
-void				ft_init_term_set(void)
+t_cap				ft_init_term_set
+		(t_cap cap, struct termios *s_term, struct termios *s_backup)
 {
-	struct termios	term;
-
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~(ECHO | ICANON);
-//	term.c_lflag &= ~(ISIG);
-//	term.c_lflag &= ~ECHO;
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
-//	term.c_cc[VEOF] = 4;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-//	tgetent(NULL, getenv("TERM"));
+	tcgetattr(STDIN_FILENO, s_term);
+	tcgetattr(STDIN_FILENO, s_backup);
+	s_term->c_lflag &= ~(ECHO | ICANON);
+	s_term->c_cc[VMIN] = 1;
+	s_term->c_cc[VTIME] = 0;
+	tcsetattr(STDIN_FILENO, TCSANOW, s_term);
+	tgetent(NULL, getenv("TERM"));
+	cap.cm = tgetstr("cm", NULL);
+	cap.ce = tgetstr("ce", NULL);
+	cap.dc = tgetstr("dc", NULL);
+	return (cap);
 }
 
-void				ft_init(char **str)
+void				ft_init
+		(char **str, struct termios *s_term, struct termios *s_backup)
 {
 	ft_signal_set();
 	g_mns->env_str = str;
@@ -37,6 +39,6 @@ void				ft_init(char **str)
 	g_mns->pth = 0;
 	g_mns->ext = 0;
 	g_mns->tmp = NULL;
-	ft_init_term_set();
-	ft_prompt_put_msg();
+	g_mns->idx = -1;
+	g_mns->cap = ft_init_term_set(g_mns->cap, s_term, s_backup);
 }

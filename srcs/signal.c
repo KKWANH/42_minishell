@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:49:18 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/08 15:25:29 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/15 11:51:09 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void				ft_signal_handle_c(int sig)
 	int				pid;
 
 	pid = waitpid(0, &sta, WNOHANG);
-	g_mns->tmp = NULL;
+	g_mns->idx = -1;
+	free(g_mns->lin);
+	g_mns->lin = ft_util_strdup("");
 	if (sig == 2)
 	{
 		if (pid == -1)
@@ -43,9 +45,11 @@ void				ft_signal_handle_rvc_slash(int sig)
 	int				pid;
 
 	pid = waitpid(0, &sta, WNOHANG);
-	g_mns->tmp = NULL;
+	g_mns->idx = -1;
+	free(g_mns->lin);
+	g_mns->lin = ft_util_strdup("");
 	if (pid == -1)
-		ft_util_putstr_fd("\b\b  \b\b", 1);
+		ft_util_putstr_fd("  \b\b", 1);
 	else
 	{
 		signal(sig, SIG_DFL);
