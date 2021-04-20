@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/20 17:13:30 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/20 17:56:20 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/resource.h>
@@ -123,6 +124,7 @@ void				ft_signal_set(void);
 /*
 ** functions - prompt.c
 */
+void				ft_prompt_intro(void);
 void				ft_prompt_put_msg(void);
 
 
