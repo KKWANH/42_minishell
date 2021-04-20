@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:40:42 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/15 11:46:40 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/19 09:30:01 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ void				ft_cursor_whereisit(int *col, int *row)
 
 void				ft_cursor_read_eof(char *lin)
 {
-	ft_util_putstr_fd("  \b\b", 1);
-	if (ft_util_strlen(lin) != 0)
-		g_mns->tmp = lin;
-	if (ft_util_strlen(g_mns->tmp) == 0)
+	if (ft_util_strlen(lin) == 0)
 	{
 		printf("exit\n");
 		exit(0);
@@ -71,8 +68,8 @@ int					ft_cursor(int *col, int *row, int tmp)
 	else if (tmp == ENTER)
 	{
 		write(1, "\n", 1);
-		return (-1);
 		g_mns->idx = -1;
+		return (-1);
 	}
 	else
 		return (0);

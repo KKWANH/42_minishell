@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/15 11:59:38 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/20 17:13:30 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct		s_mns
 	char			*tmp;
 	int				idx;
 	char			*lin;
+	int				test;
 	struct s_cmd	*cmd;
 	struct s_cap	cap; 
 }					t_mns;
@@ -108,19 +109,57 @@ typedef struct		s_mns
 ** functions - init.c
 */
 t_cap				ft_init_term_set
-	(t_cap cap, struct termios *s_term, struct termios *s_backup);
+		(t_cap cap, struct termios *s_term, struct termios *s_backup);
 void				ft_init
-	(char **str, struct termios *s_term, struct termios *s_backup);
-
-/*
-** functions - gnl.c
-*/
-int					get_next_line(int fil, char **lin);
+		(char **str, struct termios *s_term, struct termios *s_backup);
 
 /*
 ** functions - signal.c
 */
+void				ft_signal_handle_c(int sig);
+void				ft_signal_handle_rvc_slash(int sig);
 void				ft_signal_set(void);
+
+/*
+** functions - prompt.c
+*/
+void				ft_prompt_put_msg(void);
+
+
+/*
+** functions - cursor.c
+*/
+void				ft_cursor_whereisit(int *col, int *row);
+void				ft_cursor_read_eof(char *lin);
+int					ft_cursor(int *col, int *row, int tmp);
+
+/*
+** functions - key.c
+*/
+char				*ft_key_backspace(int *col, int *row, char *lin, t_cap *cap);
+void				ft_key_left(int *col, int *row, t_cap *cap);
+void				ft_key_right(int *col, int *row, char *lin, t_cap *cap);
+
+/*
+** functions - parse1.c
+*/
+void				ft_parse_pid_zero(char *lin);
+void				ft_parse(char *lin);
+
+/*
+** functions - parse2.c
+*/
+int					ft_parse_cmd2(char *lin);
+
+/*
+** functions - process.c
+*/
+int					ft_process(void);
+
+/*
+** functions - exit.c
+*/
+void				ft_exit_cmd(void);
 
 /*
 ** functions - env.c
@@ -138,44 +177,9 @@ t_env				*ft_util_env_lstlast(t_env *lst);
 void				ft_util_env_lstaddback(t_env **env, t_env *new);
 
 /*
-** functions - cursor.c
-*/
-void				ft_cursor_whereisit(int *col, int *row);
-void				ft_cursor_read_eof(char *lin);
-int					ft_cursor(int *col, int *row, int tmp);
-
-/*
-** functions - key.c
-*/
-char				*ft_key_backspace(int *col, int *row, char *lin, t_cap *cap);
-void				ft_key_left(int *col, int *row, t_cap *cap);
-void				ft_key_right(int *col, int *row, char *lin, t_cap *cap);
-
-/*
-** functions - prompt.c
-*/
-void				ft_prompt_put_msg(void);
-
-/*
-** functions - parse1.c
-*/
-int					ft_parse_cmd(char *lin);
-void				ft_parse(char *lin);
-
-/*
-** functions - process.c
-*/
-int					ft_process(void);
-
-/*
 ** functions - pwd.c
 */
 void				ft_pwd_cmd(void);
-
-/*
-** functions - exit.c
-*/
-void				ft_exit_cmd(void);
 
 /*
 ** functions - util1.c
@@ -219,6 +223,7 @@ void				ft_util_cmd_lstaddback(t_cmd *cmd);
 */
 char				*ft_util_chajoin(char *line, char c);
 int					ft_util_putchar(int tc);
+char				*ft_util_addcha(char *line, char c, int indx);
 char				*ft_util_chaout(char *line, int indx);
 int					ft_util_is_num(char chr);
 
@@ -227,5 +232,8 @@ int					ft_util_is_num(char chr);
 */
 int					ft_util_cal(char *a, int res, int minus);
 int					ft_util_atoi(char *str);
+t_str				*ft_util_str_newlst(char *val);
+t_str				*ft_util_str_lstlast(t_str *lst);
+void				ft_util_str_lstaddback(t_str **spl, char *val);
 
 #endif

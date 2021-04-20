@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/04/15 11:59:48 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/04/19 10:49:44 by kimkwanho        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,10 @@ MAIN		=	minishell.c
 SRCS		=	srcs/cursor.c \
 				srcs/env.c \
 				srcs/exit.c \
-				srcs/gnl.c \
 				srcs/init.c \
 				srcs/key.c \
 				srcs/parse1.c \
+				srcs/parse2.c \
 				srcs/process.c \
 				srcs/prompt.c \
 				srcs/pwd.c \
