@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/20 17:56:20 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/23 09:38:59 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ typedef struct		s_str
 typedef struct		s_cmd
 {
 	char			*lin;
-	char			*arg;
-	char			*cmd;
 	struct s_str	*spl;
 	struct s_cmd	*pre;
 	struct s_cmd	*nxt;
@@ -97,7 +95,7 @@ typedef struct		s_mns
 	struct s_env	*env;
 	char			**env_str;
 	char			*pth;
-	int				ext;
+	unsigned char	ext;
 	char			*tmp;
 	int				idx;
 	char			*lin;
@@ -141,6 +139,8 @@ int					ft_cursor(int *col, int *row, int tmp);
 char				*ft_key_backspace(int *col, int *row, char *lin, t_cap *cap);
 void				ft_key_left(int *col, int *row, t_cap *cap);
 void				ft_key_right(int *col, int *row, char *lin, t_cap *cap);
+void				ft_key_up(int *col, int *row, char **lin, t_cap *cap);
+void				ft_key_down(int *col, int *row, char **lin, t_cap *cap);
 
 /*
 ** functions - parse1.c
@@ -151,7 +151,7 @@ void				ft_parse(char *lin);
 /*
 ** functions - parse2.c
 */
-int					ft_parse_cmd2(char *lin);
+int					ft_parse_cmd(char *lin);
 
 /*
 ** functions - process.c
@@ -164,12 +164,23 @@ int					ft_process(void);
 void				ft_exit_cmd(void);
 
 /*
+** functions - cd.c
+*/
+// void				ft_cd_cmd(void);
+
+/*
+** functions - echo.c
+*/
+// void				ft_echo_cmd(void);
+
+/*
 ** functions - env.c
 */
 char				*ft_env_name(char *str);
 char				*ft_env_value(char *str);
 t_env				*ft_env_init(void);
 void				ft_env_cmd(void);
+char				*ft_env_search(char *nam);
 
 /*
 ** functions - util_env.c
@@ -182,6 +193,14 @@ void				ft_util_env_lstaddback(t_env **env, t_env *new);
 ** functions - pwd.c
 */
 void				ft_pwd_cmd(void);
+
+/*
+** functions - err.c
+*/
+void				err_by_exit(char *arg, unsigned char *ext);
+void				err_by_chdir(char *arg, unsigned char *ext);
+void				err_by_command(char *par, unsigned char *ext);
+void				err_by_pid(unsigned char *ext);
 
 /*
 ** functions - util1.c

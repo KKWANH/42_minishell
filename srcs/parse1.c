@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/19 10:49:32 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/23 09:34:27 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,68 +14,48 @@
 
 extern t_mns		*g_mns;
 
-// void				ft_parse_cmd_cut(t_cmd *cmd)
-// {
-// 	t_str			*str;
-	
-// 	str = ft_util_str_new();
-// }
-
-int					ft_parse_cmd(char *lin)
+int					ft_parse_check(char *cmd)
 {
-	t_cmd			*cmd;
-	int				tm1;
-	int				tm2;
-	int				idx;
-
-	cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	cmd->lin = lin;
-	idx = 0;
-	tm2 = 0;
-	while (ft_util_is_empty(cmd->lin[idx]) == 1)
-		++idx;
-	tm1 = idx;
-	while (ft_util_is_alpha(cmd->lin[tm1]) == 1)
-		++tm1;
-	if (!(cmd->cmd = (char *)malloc(sizeof(char) * (tm1 - idx))))
+	if ((ft_util_strcmp(cmd, "exit") == 0) ||
+		(ft_util_strcmp(cmd, "env") == 0) ||
+		(ft_util_strcmp(cmd, "pwd") == 0) ||
+		(ft_util_strcmp(cmd, "cd") == 0) ||
+		(ft_util_strcmp(cmd, "expose") == 0) ||
+		(ft_util_strcmp(cmd, "echo") == 0) ||
+		(ft_util_strcmp(cmd, "unset") == 0))
+		return (1);
+	else
 		return (0);
-	while (tm2 < (tm1 - idx))
-	{
-		cmd->cmd[tm2] = cmd->lin[idx + tm2];
-		++tm2;
-	}
-	while (ft_util_is_alpha(cmd->lin[idx]) == 1)
-		++idx;
-	while (ft_util_is_empty(cmd->lin[idx]) == 1)
-		++idx;
-	tm1 = 0;
-	tm2 = idx;
-	while (cmd->lin[idx])
-	{
-		++idx;
-		++tm1;
-	}
-	idx = 0;
-	if (!(cmd->arg = (char *)malloc(sizeof(char) * tm1)))
-		return (0);
-	while (idx < tm1)
-	{
-		cmd->arg[idx] = cmd->lin[tm2 + idx];
-		++idx;
-	}
-	ft_util_cmd_lstaddback(cmd);
-	return (1);
 }
 
-void				ft_parse( char *lin)
+char				**ft_parse_path(void)
 {
-	char			**par;
-	char			*bin;
-	pid_t			pid;
+	char			*pth;
+	char			**rst;
+	int				idx;
+
+	pth = ft_env_search("PATH");
+	rst = ft_util_split(pth, '/');
+	idx = 0;
+	while (rst[idx])
+	{
+		rst[idx] = ft_util_chajoin(rst[idx], '/');
+		++idx;
+	}
+	return (rst);
+}
+
+void				ft_parse_else(char *lin)
+{
 	int				rst;
 	int				sta;
+	pid_t			pid;
+	char			**par;
+	char			*bin;
 
 	pid = fork();
+	if (pid < 0)
+		err_by_pid(&g_mns->ext);
 	if (pid == 0)
 	{
 		bin = ft_util_strdup("/bin/");
@@ -88,11 +68,34 @@ void				ft_parse( char *lin)
 		exit(0);
 	}
 	else if (pid > 0)
-	{
-		ft_parse_cmd(lin);
-		ft_parse_cmd2(lin);
-		if (ft_process() == -1)
-			ft_exit_cmd();
 		waitpid(pid, &sta, 0);
+	//이걸 빌트인일때
+	//PATH 거치는 명령어일때
+	//절대경로 명령어일때
+	//2, 3인 경우에 fork 시전
+	//pipe 타이밍은 여기서 먼저 선언, 이후에 나눔
+	//아님 에러출력
+}
+
+void				ft_parse(char *lin)
+{
+	t_cmd			*tmp;
+
+	ft_parse_cmd(lin);
+	tmp = ft_util_cmd_lstlast(g_mns->cmd);
+	if (ft_parse_check(tmp->spl->str) == 1)
+		ft_process();
+	/*
+	else if(lin[0] == '/')
+		다른 뭐시기
+	else if()
+	{
+		paths = get_paths();
+		앞의 else if 들갔을때 동일한 함수
 	}
+	else
+		err_by_command(파싱 첫 단어, &g_mns->ext);
+	*/
+	else
+		ft_parse_else(lin);
 }

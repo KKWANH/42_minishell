@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 16:38:17 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/08 16:58:18 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/23 09:34:59 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,21 @@ void				ft_env_cmd(void)
 		printf("%s = %s\n", tmp->nam, tmp->val);
 		tmp = tmp->nxt;
 	}
+}
+
+char				*ft_env_search(char *nam)
+{
+	t_env			*tmp;
+
+	tmp = g_mns->env;
+	while (tmp)
+	{
+		if (ft_util_strcmp(tmp->nam, nam) == 0)
+			return (tmp->val);
+		if (tmp->nxt)
+			tmp = tmp->nxt;
+		else
+			return (NULL);
+	}
+	return (NULL);
 }

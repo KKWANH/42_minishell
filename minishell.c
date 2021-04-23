@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 08:54:33 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/19 09:10:15 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/22 16:30:22 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,10 @@ int					main(int arc, char **arv, char **env)
 	while (1)
 	{
 		ft_prompt_put_msg();
-		// NonCanonical
 		tcsetattr(STDIN_FILENO, TCSANOW, &s_term);
 		ft_cursor_whereisit(&g_mns->cap.p_col, &g_mns->cap.p_row);
 		g_mns->lin = ft_util_strdup("");
 		ft_minishell_input_main(0, 0, 0);
-		// Backup
 		tcsetattr(STDIN_FILENO, TCSANOW, &s_backup);
 		ft_parse(g_mns->lin);
 		free(g_mns->lin);

@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 15:33:06 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/20 17:00:30 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/22 16:08:59 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ char				*ft_parse_get_str(char *lin, int *idx)
 	while (lin[cnt] && ft_util_is_empty(lin[cnt]) == 0)
 		++cnt;
 	cnt = cnt - *idx;
-	str = (char *)malloc(sizeof(char) * cnt);
+	str = (char *)malloc(sizeof(char) * (cnt + 1));
 	while (jdx < cnt)
 	{
 		str[jdx] = lin[*idx + jdx];
 		++jdx;
 	}
+	str[jdx] = '\0';
 	*idx += cnt;
 	return (str);
 }
@@ -43,25 +44,26 @@ void				ft_parse_cmd_cut(t_cmd *cmd)
 	idx = 0;
 	new = (t_str *)malloc(sizeof(t_str));
 	new->str = NULL;
+	new->nxt = NULL;
 	while (cmd->lin[idx])
 	{
 		if (ft_util_is_empty(cmd->lin[idx]) == 1)
 			++idx;
 		else
-		{
 			ft_util_str_lstaddback(&new, ft_parse_get_str(cmd->lin, &idx));
-		}
 	}
 	cmd->spl = new;
 }
 
-int					ft_parse_cmd2(char *lin)
+int					ft_parse_cmd(char *lin)
 {
 	t_cmd			*cmd;
 	int				idx;
 
 	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	cmd->lin = lin;
+	cmd->pre = NULL;
+	cmd->nxt = NULL;
 	idx = 0;
 	// while (cmd->lin[idx])
 	// {
@@ -76,25 +78,5 @@ int					ft_parse_cmd2(char *lin)
 	// }
 	ft_parse_cmd_cut(cmd);
 	ft_util_cmd_lstaddback(cmd);
-	// t_cmd			*tmp;
-
-	// tmp = cmd;
-	// while (tmp)
-	// {
-	// 	printf("--------------\ncmd[%s] lin[%s]\nsplit str is [", tmp->cmd, tmp->lin);
-	// 	while (tmp->spl)
-	// 	{
-	// 		printf("%s ", tmp->spl->str);
-	// 		if (tmp->spl->nxt)
-	// 			tmp->spl = tmp->spl->nxt;
-	// 		else
-	// 			break;
-	// 	}
-	// 	printf("]\n--------------\n");
-	// 	if (tmp->nxt)
-	// 		tmp = tmp->nxt;
-	// 	else
-	// 		break;
-	// }
 	return (1);
 }
