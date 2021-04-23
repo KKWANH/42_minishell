@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/23 09:38:59 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/23 10:41:24 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ void				ft_signal_set(void);
 */
 void				ft_prompt_intro(void);
 void				ft_prompt_put_msg(void);
-
 
 /*
 ** functions - cursor.c
