@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:49:18 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/22 15:21:46 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/23 17:41:26 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void				ft_signal_handle_c(int sig)
 	{
 		if (pid == -1)
 		{
-			ft_util_putstr_fd("\b\b  \b\b\n", 1);
+			ft_util_putstr_fd("  \b\b\n", 1);
 			ft_prompt_put_msg();
 			g_mns->ext = 1;
 		}

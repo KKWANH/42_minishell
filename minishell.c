@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 08:54:33 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/22 16:30:22 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/23 16:25:36 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 t_mns				*g_mns;
 
-char				*ft_minishell_insert(char chr, int *col, int *row, t_cap *cap)
+char				*ft_minishell_insert
+	(char chr, int *col, int *row, t_cap *cap)
 {
 	int				c_col;
 
@@ -46,16 +47,16 @@ void				ft_minishell_input_main(int col, int row, int tmp)
 		if (rst == 0)
 		{
 			chr = tmp;
-			if (chr == '\t' || chr == '\a' || chr == '\r')
-				continue ;
-			if (g_mns->idx +1 != ft_util_strlen(g_mns->lin))
-			{
+			if (chr < 32 || tmp > 127)
+				tmp = 0;
+			else if (g_mns->idx + 1 != ft_util_strlen(g_mns->lin))
 				g_mns->lin = ft_minishell_insert(chr, &col, &row, &g_mns->cap);
-				continue ;
+			else
+			{
+				write(0, &tmp, 1);
+				g_mns->lin = ft_util_chajoin(g_mns->lin, chr);
+				++g_mns->idx;
 			}
-			write(0, &tmp, 1);
-			g_mns->lin = ft_util_chajoin(g_mns->lin, chr);
-			++g_mns->idx;
 		}
 		tmp = 0;
 	}
@@ -77,7 +78,7 @@ int					main(int arc, char **arv, char **env)
 		g_mns->lin = ft_util_strdup("");
 		ft_minishell_input_main(0, 0, 0);
 		tcsetattr(STDIN_FILENO, TCSANOW, &s_backup);
-		ft_parse(g_mns->lin);
+		ft_exe(g_mns->lin);
 		free(g_mns->lin);
 	}
 	return (0);

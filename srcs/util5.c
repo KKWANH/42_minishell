@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 09:41:06 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/19 09:27:26 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/23 11:00:56 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char				*ft_util_chaout(char *line, int indx)
 		return (0);
 	i = 0;
 	j = 0;
-	while (i < len)
+	while (j < len)
 	{
 		if (j == indx)
 		{

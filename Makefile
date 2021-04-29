@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/04/22 23:39:27 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/04/29 23:54:49 by kimkwanho        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,10 @@ SRCS		=	srcs/cd.c \
 				srcs/export.c \
 				srcs/init.c \
 				srcs/key.c \
-				srcs/parse1.c \
-				srcs/parse2.c \
-				srcs/process.c \
+				srcs/exe.c \
+				srcs/util_exe.c \
+				srcs/parse.c \
+				srcs/builtin.c \
 				srcs/prompt.c \
 				srcs/pwd.c \
 				srcs/echo.c \
@@ -49,7 +50,7 @@ all : ${NAME}
 
 $(NAME) : ${OBJS}
 		@echo "\033[33m[Minishell compilation...]\033[0m"
-		${CC} ${MCHECK} -lncurses ${MAIN} ${SRCS} -o ${NAME}
+		${CC} -lncurses ${MAIN} ${SRCS} -o ${NAME}
 		@echo "\033[33m[Clean minishell...]\033[0m"
 		${RM} ${OBJS}
 

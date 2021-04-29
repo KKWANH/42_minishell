@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/23 10:41:24 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/29 23:36:32 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct		s_str
 typedef struct		s_cmd
 {
 	char			*lin;
-	struct s_str	*spl;
+	char			**spl;
 	struct s_cmd	*pre;
 	struct s_cmd	*nxt;
 }					t_cmd;
@@ -142,20 +142,27 @@ void				ft_key_up(int *col, int *row, char **lin, t_cap *cap);
 void				ft_key_down(int *col, int *row, char **lin, t_cap *cap);
 
 /*
-** functions - parse1.c
+** functions - exe.c
 */
 void				ft_parse_pid_zero(char *lin);
-void				ft_parse(char *lin);
+void				ft_exe(char *lin);
 
 /*
-** functions - parse2.c
+** functions - util_exe.c
+*/
+char				**ft_util_exe_parse_path(void);
+int					ft_util_exe_is_execable(char *path);
+
+/*
+** functions - parse.c
 */
 int					ft_parse_cmd(char *lin);
 
 /*
-** functions - process.c
+** functions - builtin.c
 */
-int					ft_process(void);
+int					ft_builtin(void);
+int					ft_parse_check(char *cmd);
 
 /*
 ** functions - exit.c
@@ -165,12 +172,12 @@ void				ft_exit_cmd(void);
 /*
 ** functions - cd.c
 */
-// void				ft_cd_cmd(void);
+void				ft_cd_cmd(char **inp);
 
 /*
 ** functions - echo.c
 */
-// void				ft_echo_cmd(void);
+void				ft_echo_cmd(char **inp);
 
 /*
 ** functions - env.c
@@ -178,8 +185,7 @@ void				ft_exit_cmd(void);
 char				*ft_env_name(char *str);
 char				*ft_env_value(char *str);
 t_env				*ft_env_init(void);
-void				ft_env_cmd(void);
-char				*ft_env_search(char *nam);
+void				ft_env_cmd(char **inp);
 
 /*
 ** functions - util_env.c
@@ -191,7 +197,7 @@ void				ft_util_env_lstaddback(t_env **env, t_env *new);
 /*
 ** functions - pwd.c
 */
-void				ft_pwd_cmd(void);
+void				ft_pwd_cmd(char **inp);
 
 /*
 ** functions - err.c
@@ -199,6 +205,7 @@ void				ft_pwd_cmd(void);
 void				err_by_exit(char *arg, unsigned char *ext);
 void				err_by_chdir(char *arg, unsigned char *ext);
 void				err_by_command(char *par, unsigned char *ext);
+void				err_by_path(char *par, unsigned char *ext);
 void				err_by_pid(unsigned char *ext);
 
 /*

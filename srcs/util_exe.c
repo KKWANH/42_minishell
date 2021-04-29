@@ -1,30 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   util_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 14:13:55 by juhpark           #+#    #+#             */
-/*   Updated: 2021/04/29 23:13:37 by kimkwanho        ###   ########.fr       */
+/*   Created: 2021/04/23 16:27:11 by juhpark           #+#    #+#             */
+/*   Updated: 2021/04/29 23:33:28 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_mns				*g_mns;
+extern t_mns		*g_mns;
 
-void				ft_cd_cmd(char **inp)
+char				**ft_util_exe_parse_path(void)
 {
-	char			*hom;
+	char			*pth;
+	char			**rst;
+	int				idx;
 
-	if (inp[1] == NULL)
+	pth = getenv("PATH");
+	rst = ft_util_split(pth, ':');
+	idx = 0;
+	while (rst[idx])
 	{
-		hom = getenv("HOME");
-		if (chdir(hom) == -1)
-			err_by_chdir(inp[0], &g_mns->ext);
+		rst[idx] = ft_util_chajoin(rst[idx], '/');
+		++idx;
 	}
-	else if (chdir(inp[1]) == -1)
-		err_by_chdir(inp[0], &g_mns->ext);
+	return (rst);
 }
 
+int					ft_util_exe_is_execable(char *path)
+{
+	struct stat		test;
+
+	if (stat(path, &test) == 0)
+		return (1);
+	else
+		return (0);
+}

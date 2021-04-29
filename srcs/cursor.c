@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:40:42 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/22 15:46:51 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/04/23 10:59:40 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int					ft_cursor(int *col, int *row, int tmp)
 		ft_key_left(col, row, &g_mns->cap);
 	else if (tmp == RIGHT_ARROW)
 		ft_key_right(col, row, g_mns->lin, &g_mns->cap);
-	else if  (tmp == UP_ARROW)
+	else if (tmp == UP_ARROW)
 		ft_key_up(col, row, &g_mns->lin, &g_mns->cap);
 	else if (tmp == DOWN_ARROW)
 		ft_key_down(col, row, &g_mns->lin, &g_mns->cap);

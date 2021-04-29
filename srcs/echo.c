@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juhpark <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 17:31:00 by juhpark           #+#    #+#             */
-/*   Updated: 2021/04/20 19:56:10 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/04/29 23:15:26 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
+
 #include "../minishell.h"
 
 t_mns				*g_mns;
@@ -32,28 +32,27 @@ void				ft_echo_ext(char *par)
 	}
 }
 
-void				ft_echo_cmd(void)
+void				ft_echo_cmd(char **inp)
 {
 	int i;
 	int flag;
 
 	i = 1;
 	flag = 0;
-	while (g_mns->par[i])
+	while (inp[i])
 	{
-		if ((ft_util_strcmp(g_mns->par[1], "-n") == 0) &&
-				(ft_util_strlen(g_mns->par[1]) == 2) && i == 1)
+		if ((ft_util_strcmp(inp[1], "-n") == 0) &&
+				(ft_util_strlen(inp[1]) == 2) && i == 1)
 			flag++;
-		if ((ft_util_strnstr(g_mns->par[i],
-						"$?", ft_util_strlen(g_mns->par[i]))) != NULL)
-			ft_echo_ext(g_mns->par[i]);
+		if ((ft_util_strnstr(inp[i],
+						"$?", ft_util_strlen(inp[i]))) != NULL)
+			ft_echo_ext(inp[i]);
 		else
-			printf("%s", g_mns->par[i]);
-		if (g_mns->par[i + 1] != NULL)
+			printf("%s", inp[i]);
+		if (inp[i + 1] != NULL)
 			printf(" ");
 		i++;
 	}
 	if (!flag)
 		printf("\n");
 }
-*/
