@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/29 23:36:32 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/01 22:29:53 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@
 # define RIGHT_ARROW 4414235
 # define UP_ARROW 4283163
 # define DOWN_ARROW 4348699
+# define TYPE_NO 0
+# define TYPE_PIPE 1
+# define TYPE_SEMI 2
 
 /*
 ** structs
@@ -67,16 +70,19 @@ typedef struct		s_env
 	struct s_env	*nxt;
 }					t_env;
 
-typedef struct		s_str
+typedef struct		s_par
 {
-	char			*str;
-	struct s_str	*nxt;
-}					t_str;
+	char			**spl;
+	int				fil[2];
+	int				typ;
+	int				pip;
+	struct s_par	*nxt;
+	struct s_par	*pre;
+}					t_par;
 
 typedef struct		s_cmd
 {
 	char			*lin;
-	char			**spl;
 	struct s_cmd	*pre;
 	struct s_cmd	*nxt;
 }					t_cmd;
@@ -150,34 +156,40 @@ void				ft_exe(char *lin);
 /*
 ** functions - util_exe.c
 */
-char				**ft_util_exe_parse_path(void);
-int					ft_util_exe_is_execable(char *path);
+char				**ft_util_parse_path(void);
+int					ft_util_is_execable(char *path);
+void				ft_util_close_pipe(t_par *par);
+void				ft_util_open_pipe(t_par *par);
+
 
 /*
 ** functions - parse.c
 */
-int					ft_parse_cmd(char *lin);
+int					ft_parse_list_rewind(t_par **par);
+int					ft_parse_list_free(t_par **par);
+t_par				*ft_parse_init(void);
+t_par				*ft_parse_cmd(char *lin, t_par *par);
 
 /*
 ** functions - builtin.c
 */
-int					ft_builtin(void);
+int					ft_builtin(t_par *par);
 int					ft_parse_check(char *cmd);
 
 /*
 ** functions - exit.c
 */
-void				ft_exit_cmd(void);
+void				ft_exit_cmd(t_par *par);
 
 /*
 ** functions - cd.c
 */
-void				ft_cd_cmd(char **inp);
+void				ft_cd_cmd(t_par *par);
 
 /*
 ** functions - echo.c
 */
-void				ft_echo_cmd(char **inp);
+void				ft_echo_cmd(t_par *par);
 
 /*
 ** functions - env.c
@@ -197,7 +209,7 @@ void				ft_util_env_lstaddback(t_env **env, t_env *new);
 /*
 ** functions - pwd.c
 */
-void				ft_pwd_cmd(char **inp);
+void				ft_pwd_cmd(t_par *par);
 
 /*
 ** functions - err.c
@@ -259,8 +271,5 @@ int					ft_util_is_num(char chr);
 */
 int					ft_util_cal(char *a, int res, int minus);
 int					ft_util_atoi(char *str);
-t_str				*ft_util_str_newlst(char *val);
-t_str				*ft_util_str_lstlast(t_str *lst);
-void				ft_util_str_lstaddback(t_str **spl, char *val);
 
 #endif

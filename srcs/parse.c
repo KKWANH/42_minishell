@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 15:33:06 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/29 23:53:37 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/01 22:25:07 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,85 +14,101 @@
 
 extern t_mns		*g_mns;
 
-char				*ft_parse_get_str(char *lin, int *idx)
+int					ft_parse_list_rewind(t_par **par)
 {
-	int				cnt;
-	int				jdx;
-	char			*str;
+	while (*par && (*par)->pre)
+		*par = (*par)->pre;
+	return (0);
+}
 
-	cnt = *idx;
-	jdx = 0;
-	while (lin[cnt] && ft_util_is_empty(lin[cnt]) == 0)
-		++cnt;
-	cnt = cnt - *idx;
-	str = (char *)malloc(sizeof(char) * (cnt + 1));
-	while (jdx < cnt)
+int					ft_parse_list_free(t_par **par)
+{
+	t_par			*tmp;
+	int				idx;
+
+	ft_parse_list_rewind(par);
+	while (*par)
 	{
-		str[jdx] = lin[*idx + jdx];
+		idx = 0;
+		tmp = (*par)->nxt;
+		if ((*par)->spl != NULL)
+			ft_util_freestrstr((*par)->spl);
+		free(*par);
+		*par = tmp;
+	}
+	return (0);
+}
+
+t_par				*ft_parse_init(void)
+{
+	t_par			*new;
+
+	if (!(new = (t_par *)malloc(sizeof(t_par))))
+		return (NULL);
+	new->spl = (char **)malloc(sizeof(char *) * 100);
+	new->pip = 0;
+	new->typ = 0;
+	new->nxt = NULL;
+	new->pre = NULL;
+	return (new);
+}
+
+void					ft_parse_semi(int *jdx, int *idx, t_par **par)
+{
+	t_par *new;
+
+	*jdx = 0;
+	*idx += 1;
+	new = ft_parse_init();
+	if (*par)
+	{
+		(*par)->nxt = new;
+		new->pre = (*par);
+	}
+	*par = new;
+}
+
+t_par				*ft_parse_cmd(char *lin, t_par *par)
+{
+	int				idx;
+	int				jdx;
+	char			**spl;
+	char			*rst;
+
+	idx = 0;
+	jdx = 0;
+	if (par == NULL)
+		par = ft_parse_init();
+	spl = ft_util_split(lin, ' ');
+	while (spl[idx])
+	{
+		if ((rst = (ft_util_strnstr(spl[idx], ";", ft_util_strlen(spl[idx])))) != NULL)
+		{
+			par->spl[jdx] = NULL;
+			par->typ = TYPE_SEMI;
+			ft_parse_semi(&jdx, &idx, &par);
+			continue ;
+		}
+		else if ((rst = (ft_util_strnstr(spl[idx], "|", ft_util_strlen(spl[idx])))) != NULL)
+		{
+			par->spl[jdx] = NULL;
+			par->typ = TYPE_PIPE;
+			ft_parse_semi(&jdx, &idx, &par);
+			continue ;
+		}
+		par->spl[jdx] = ft_util_strdup(spl[idx]);
+		++idx;
 		++jdx;
 	}
-	str[jdx] = '\0';
-	*idx += cnt;
-	return (str);
-}
+	par->spl[jdx] = NULL;
+	ft_parse_list_rewind(&par);
 
-int					ft_parse_cmd_cut(t_cmd *cmd)
-{
-	int				idx;
-	int				jdx;
-
-	idx = 0;
-	jdx = 0;
-	while (cmd->lin[idx])
+	t_par			*tmp = par;
+	while (tmp->nxt)
 	{
-		while (cmd->lin[idx] && ft_util_is_empty(cmd->lin[idx]) == 1)
-			++idx;
-		if (cmd->lin[idx] && ft_util_is_empty(cmd->lin[idx]) == 0)
-			++jdx;
-		while (cmd->lin[idx] && ft_util_is_empty(cmd->lin[idx]) == 0)
-			++idx;
+		printf("asd test : %s\n", tmp->spl[0]);
+		tmp = tmp->nxt;
 	}
-	idx = 0;
-	if (!(cmd->spl = (char **)malloc(sizeof(char *) * (jdx + 1))))
-		return (0);
-	jdx = 0;
-	while (cmd->lin[idx])
-	{
-		if (ft_util_is_empty(cmd->lin[idx]) == 1)
-			++idx;
-		else
-		{
-			cmd->spl[jdx] = ft_parse_get_str(cmd->lin, &idx);
-			++jdx;
-		}
-	}
-	cmd->spl[jdx] = NULL;
-	return (1);
-}
-
-int					ft_parse_cmd(char *lin)
-{
-	t_cmd			*cmd;
-	int				idx;
-
-	cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	cmd->lin = lin;
-	cmd->pre = NULL;
-	cmd->nxt = NULL;
-	idx = 0;
-	// while (cmd->lin[idx])
-	// {
-	// 	if (ft_util_is_empty(cmd->lin[idx]))
-	// 		++idx;
-	// 	else if (cmd->lin[idx] == '$')
-	// 		ft_parse_dollar(lin, &idx, cmd);
-	// 	else if (cmd->lin[idx] == '\"')
-	// 		ft_parse_double_quote(lin, &idx, cmd);
-	// 	else if (cmd->lin[idx] == '\'')
-	// 		ft_parse_single_quote(lin, &idx, cmd);
-	// }
-	if (ft_parse_cmd_cut(cmd) == 0)
-		return (0);
-	ft_util_cmd_lstaddback(cmd);
-	return (1);
+	ft_util_freestrstr(spl);
+	return (par);
 }

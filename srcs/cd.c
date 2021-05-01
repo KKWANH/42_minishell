@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/19 14:13:55 by juhpark           #+#    #+#             */
-/*   Updated: 2021/04/29 23:13:37 by kimkwanho        ###   ########.fr       */
+/*   Created: 2021/04/19 14:13:55 by kimkwanho         #+#    #+#             */
+/*   Updated: 2021/05/01 22:29:46 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 
 t_mns				*g_mns;
 
-void				ft_cd_cmd(char **inp)
+void				ft_cd_cmd(t_par *par)
 {
 	char			*hom;
 
-	if (inp[1] == NULL)
+	if (par->spl[1] == NULL)
 	{
 		hom = getenv("HOME");
 		if (chdir(hom) == -1)
-			err_by_chdir(inp[0], &g_mns->ext);
+		{
+			ft_util_putstr_fd(ANSI_RED, 2);
+			ft_util_putstr_fd("bash : cd: HOME not set\n", 2);
+			ft_util_putstr_fd(ANSI_RES, 2);
+			return ;
+		}
 	}
-	else if (chdir(inp[1]) == -1)
-		err_by_chdir(inp[0], &g_mns->ext);
+	else if (chdir(par->spl[1]) == -1)
+		err_by_chdir(par->spl[1], &g_mns->ext);
 }
-

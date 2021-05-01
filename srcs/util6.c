@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 21:42:08 by pjh399            #+#    #+#             */
-/*   Updated: 2021/04/20 16:54:32 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/01 22:30:07 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,39 +54,4 @@ int					ft_util_atoi(char *str)
 		return (0);
 	a = str;
 	return (ft_util_cal(a, res, i));
-}
-
-t_str				*ft_util_str_newlst(char *val)
-{
-	t_str			*new;
-
-	if (!(new = (t_str *)malloc(sizeof(t_str))))
-		return (NULL);
-	new->str = val;
-	new->nxt = NULL;
-	return (new);
-}
-
-t_str				*ft_util_str_lstlast(t_str *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->nxt)
-		lst = lst->nxt;
-	return (lst);
-}
-
-void				ft_util_str_lstaddback(t_str **spl, char *val)
-{
-	t_str			*new;
-
-	new = ft_util_str_newlst(val);
-	if (!spl || !new)
-		return ;
-	else if (!(*spl))
-		(*spl) = new;
-	else if (!(*spl)->str)
-		(*spl)->str = val;
-	else
-		(ft_util_str_lstlast(*spl))->nxt = new;
 }
