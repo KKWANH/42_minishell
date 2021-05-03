@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 16:56:32 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/03 23:59:06 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 00:06:02 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void				ft_builtin_fork(t_par *par, int sta)
 	}
 }
 
-int					ft_builtin(t_par *par)
+void				ft_builtin(t_par *par)
 {
 	if (par->pip)
 		ft_builtin_fork(par, 0);
@@ -93,6 +93,4 @@ int					ft_builtin(t_par *par)
 	// if (ft_util_strcmp(tmp->cmd, "export"))
 	// 	if (ft_export_cmd(tmp->lin) == 0)
 	// 		ft_util_putstr_fd(ANSI_RED "zsh: " ANSI_RES "bad assignment\n", 1);
-	exit(g_mns->ext);
-	return (g_mns->ext);
 }

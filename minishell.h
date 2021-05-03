@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/03 23:51:21 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 00:06:14 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,8 +193,8 @@ void				ft_redir_in(t_par *par, int i);
 /*
 ** functions - builtin.c
 */
-int					ft_builtin(t_par *par);
 int					ft_parse_check(char *cmd);
+void				ft_builtin(t_par *par);
 
 /*
 ** functions - exit.c

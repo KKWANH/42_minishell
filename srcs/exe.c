@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/03 23:51:31 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 00:05:20 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ void				ft_execve(t_par *par, int res, int sta)
 			dup2(par->fd_in, 0);
 		if (par->fd_out != -2)
 			dup2(par->fd_out, 1);
-		if (ft_parse_check(par->spl[0]) == 1)
-			ft_builtin(par);
 		else if (par->spl[0][0] == '/')
 			res = execve(par->spl[0], par->spl, g_mns->env_str);
 		else
