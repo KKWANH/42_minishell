@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/03 19:52:43 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/03 23:51:31 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void				ft_execve(t_par *par, int res, int sta)
 
 void				ft_exe_loop(t_par *par)
 {
-	char			*pth;
-
 	while (par)
 	{
 		ft_check_redir(par);
@@ -82,10 +80,8 @@ void				ft_exe_loop(t_par *par)
 			if (pipe(par->fil) == -1)
 				return ;
 		}
-		if (par->pip == 0 && ft_util_strcmp(par->spl[0], "exit") == 0)
-			ft_exit_cmd(par);
 		if (ft_parse_check(par->spl[0]) == 1)
-			ft_execve(par, 0, 0);
+			ft_builtin(par);
 		else if (par->spl[0][0] == '/') //절대경로인가 
 		{
 			if (ft_util_is_execable(par->spl[0]))
@@ -93,7 +89,7 @@ void				ft_exe_loop(t_par *par)
 			else
 				err_by_path(par->spl[0], &g_mns->ext);
 		}
-		else if ((pth = getenv("PATH")) != NULL) //얘는 나중에 바뀔수도?->getenv가 아닌 다른방식으로..
+		else if ((ft_util_env_search("PATH")) != 0)
 			ft_execve(par, 0, 0);
 		else
 			err_by_path(par->spl[0], &g_mns->ext);
@@ -109,20 +105,17 @@ void				ft_exe(char *lin)
 
 	par = NULL;
 	cmd = NULL;
+	
 	if (lin[0] == '\0')
 		return ;
-
 	if (!(cmd = (t_cmd *)malloc(sizeof(t_cmd))))
 		return ;
-	cmd->lin = lin;
+	cmd->lin = ft_util_strdup(lin);
 	cmd->cur = 0;
 	cmd->nxt = 0;
 	cmd->pre = 0;
 	ft_util_cmd_lstaddback(cmd);
-	
 	par = ft_parse_cmd(lin, par);
 	ft_exe_loop(par);
-	// cmd->lin = lin;
-	// ft_util_cmd_lstaddback(cmd);
 	ft_parse_list_free(&par);
 }

@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 09:32:16 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/01 22:31:42 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/03 23:39:07 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void				ft_init
 	g_mns->idx = -1;
 	g_mns->cmd = NULL;
 	g_mns->cap = ft_init_term_set(g_mns->cap, s_term, s_backup);
+	g_mns->fst = 0;
 	ft_prompt_intro();
 }

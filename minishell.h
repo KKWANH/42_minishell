@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/03 20:06:25 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/03 23:51:21 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct		s_mns
 	int				idx;
 	char			*lin;
 	int				test;
+	int				fst;
 	struct s_cmd	*cmd;
 	struct s_cap	cap; 
 }					t_mns;
@@ -224,6 +225,7 @@ void				ft_env_cmd(char **inp);
 t_env				*ft_util_env_lstnew(char *nam, char *val);
 t_env				*ft_util_env_lstlast(t_env *lst);
 void				ft_util_env_lstaddback(t_env **env, t_env *new);
+char				*ft_util_env_search(char *cmd);
 
 /*
 ** functions - pwd.c

@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/02 14:48:44 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/03 20:05:45 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/03 23:58:32 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char				*ft_history_down(void)
 {
 	t_cmd			*tmp;
 
+	if (g_mns->fst == 0)
+		return (NULL);
 	tmp = g_mns->cmd;
 	while (tmp)
 	{
@@ -45,13 +47,9 @@ char				*ft_history_down(void)
 			tmp->cur = 1;
 			return (tmp->lin);
 		}
-		else if (tmp->nxt)
-			tmp = tmp->nxt;
-		else
-		{
-			ft_util_cmd_lstlast(g_mns->cmd)->cur = 1;
-			return (ft_util_cmd_lstlast(g_mns->cmd)->lin);
-		}
+		else if (!tmp->nxt)
+			break ;
+		tmp = tmp->nxt;
 	}
 	return (NULL);
 }
@@ -60,6 +58,8 @@ char				*ft_history_up(void)
 {
 	t_cmd			*tmp;
 
+	if (g_mns->fst == 0)
+		return (NULL);
 	tmp = ft_util_cmd_lstlast(g_mns->cmd);
 	while (tmp)
 	{
@@ -73,15 +73,12 @@ char				*ft_history_up(void)
 			tmp->cur = 1;
 			return (tmp->lin);
 		}
-		else if (tmp->pre)
-			tmp = tmp->pre;
-		else
-		{
-			ft_util_cmd_lstlast(g_mns->cmd)->cur = 1;
-			return (ft_util_cmd_lstlast(g_mns->cmd)->lin);
-		}
+		else if (!tmp->pre)
+			break ;
+		tmp = tmp->pre;
 	}
-	return (NULL);
+	ft_util_cmd_lstlast(g_mns->cmd)->cur = 1;
+	return (ft_util_cmd_lstlast(g_mns->cmd)->lin);
 }
 
 void				ft_history_set_zero(void)
@@ -89,6 +86,7 @@ void				ft_history_set_zero(void)
 	t_cmd			*tmp;
 
 	tmp = g_mns->cmd;
+	g_mns->fst = 1;
 	while (tmp)
 	{
 		tmp->cur = 0;
