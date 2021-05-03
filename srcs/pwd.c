@@ -6,11 +6,13 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 13:43:10 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/01 22:25:52 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/03 17:39:16 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+t_mns				*g_mns;
 
 void				ft_pwd_cmd(t_par *par)
 {
@@ -27,4 +29,5 @@ void				ft_pwd_cmd(t_par *par)
 	}
 	write(1, buf, ft_util_strlen(buf));
 	write(1, "\n", 1);
+	g_mns->ext = 0;
 }

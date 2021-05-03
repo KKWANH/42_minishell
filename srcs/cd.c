@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 14:13:55 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/01 22:29:46 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/03 17:31:24 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ void				ft_cd_cmd(t_par *par)
 	}
 	else if (chdir(par->spl[1]) == -1)
 		err_by_chdir(par->spl[1], &g_mns->ext);
+	g_mns->ext = 0;
 }

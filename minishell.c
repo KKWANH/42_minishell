@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 08:54:33 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/01 22:35:33 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/03 19:51:42 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void				ft_minishell_input_main(int col, int row, int tmp)
 	{
 		rst = ft_cursor(&col, &row, tmp);
 		if (rst == -1)
+		{
+			ft_history_set_zero();
 			return ;
+		}
 		if (rst == 0)
 		{
 			chr = tmp;

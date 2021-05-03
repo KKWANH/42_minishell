@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/05/01 22:20:26 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/05/03 20:07:09 by kimkwanho        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,12 @@ SRCS		=	srcs/cd.c \
 				srcs/export.c \
 				srcs/init.c \
 				srcs/key.c \
+				srcs/history.c \
 				srcs/exe.c \
 				srcs/parse.c \
 				srcs/builtin.c \
 				srcs/prompt.c \
+				srcs/redir.c \
 				srcs/pwd.c \
 				srcs/echo.c \
 				srcs/err.c \

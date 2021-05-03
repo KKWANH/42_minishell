@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 15:33:06 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/01 22:25:07 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/03 17:30:11 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ t_par				*ft_parse_init(void)
 	new->typ = 0;
 	new->nxt = NULL;
 	new->pre = NULL;
+	new->fd_in = -2;
+	new->fd_out = -2;
 	return (new);
 }
 
@@ -102,13 +104,6 @@ t_par				*ft_parse_cmd(char *lin, t_par *par)
 	}
 	par->spl[jdx] = NULL;
 	ft_parse_list_rewind(&par);
-
-	t_par			*tmp = par;
-	while (tmp->nxt)
-	{
-		printf("asd test : %s\n", tmp->spl[0]);
-		tmp = tmp->nxt;
-	}
 	ft_util_freestrstr(spl);
 	return (par);
 }

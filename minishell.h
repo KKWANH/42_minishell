@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/01 22:29:53 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/03 20:06:25 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct		s_par
 	int				fil[2];
 	int				typ;
 	int				pip;
+	int				fd_in;
+	int				fd_out;
 	struct s_par	*nxt;
 	struct s_par	*pre;
 }					t_par;
@@ -83,6 +85,7 @@ typedef struct		s_par
 typedef struct		s_cmd
 {
 	char			*lin;
+	int				cur;
 	struct s_cmd	*pre;
 	struct s_cmd	*nxt;
 }					t_cmd;
@@ -148,6 +151,13 @@ void				ft_key_up(int *col, int *row, char **lin, t_cap *cap);
 void				ft_key_down(int *col, int *row, char **lin, t_cap *cap);
 
 /*
+** functions - history.c
+*/
+char				*ft_history_down(void);
+char				*ft_history_up(void);
+void				ft_history_set_zero(void);
+
+/*
 ** functions - exe.c
 */
 void				ft_parse_pid_zero(char *lin);
@@ -169,6 +179,15 @@ int					ft_parse_list_rewind(t_par **par);
 int					ft_parse_list_free(t_par **par);
 t_par				*ft_parse_init(void);
 t_par				*ft_parse_cmd(char *lin, t_par *par);
+
+/*
+** functions - parse.c
+*/
+void				ft_check_redir(t_par *par);
+void				ft_rebuild_redir(t_par *par, int i, int backup);
+void				ft_redir_out_append(t_par *par, int i);
+void				ft_redir_out_trunc(t_par *par, int i);
+void				ft_redir_in(t_par *par, int i);
 
 /*
 ** functions - builtin.c

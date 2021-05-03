@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 16:32:00 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/01 22:33:03 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/03 17:43:30 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,10 @@ void				ft_echo_cmd(t_par *par)
 		else
 			ft_util_putstr_fd(par->spl[idx], 1);
 		if (par->spl[idx + 1] != NULL)
-			printf(" ");
+			write(1, " ", 1);
 		idx++;
 	}
 	if (!flag)
 		printf("\n");
+	g_mns->ext = 0;
 }
-
-// '\'.. 과연 어찌 되었을까..?
