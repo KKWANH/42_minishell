@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 00:05:20 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 16:27:28 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,5 @@ void				ft_exe(char *lin)
 	ft_util_cmd_lstaddback(cmd);
 	par = ft_parse_cmd(lin, par);
 	ft_exe_loop(par);
-	ft_parse_list_free(&par);
+	ft_util_parse_list_free(&par);
 }

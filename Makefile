@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/05/03 20:07:09 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/05/04 16:24:07 by kimkwanho        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS		=	srcs/cd.c \
 				srcs/signal.c \
 				srcs/util_env.c \
 				srcs/util_exe.c \
+				srcs/util_parse.c \
 				srcs/util1.c \
 				srcs/util2.c \
 				srcs/util3.c \
@@ -68,6 +69,7 @@ fclean : clean
 		${RM} ${NAME}
 
 run : all
+		@echo "\033[33m---------------------------------------\033[0m"
 		@echo "\033[33m[Minishell start!]\033[0m"
 		@echo "\033[33m---------------------------------------\033[0m"
 		./$(NAME)

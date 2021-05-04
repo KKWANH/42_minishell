@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 00:06:14 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 10:01:56 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,10 +176,14 @@ void				ft_util_open_pipe(t_par *par);
 /*
 ** functions - parse.c
 */
-int					ft_parse_list_rewind(t_par **par);
-int					ft_parse_list_free(t_par **par);
-t_par				*ft_parse_init(void);
 t_par				*ft_parse_cmd(char *lin, t_par *par);
+
+/*
+** functions - util_parse.c
+*/
+int					ft_util_parse_list_rewind(t_par **par);
+int					ft_util_parse_list_free(t_par **par);
+t_par				*ft_util_parse_init(void);
 
 /*
 ** functions - parse.c
