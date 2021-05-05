@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 21:39:37 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/05 16:50:59 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,11 @@ char				*ft_util_env_search(char *cmd);
 ** functions - pwd.c
 */
 void				ft_pwd_cmd(t_par *par);
+
+/*
+** functions - export.c
+*/
+void				ft_export_cmd(t_par *par);
 
 /*
 ** functions - err.c
