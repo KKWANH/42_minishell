@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/16 10:44:14 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 21:31:44 by juhpark          ###   ########.fr       */
+/*   Created: 2021/04/16 10:44:14 by juhpark           #+#    #+#             */
+/*   Updated: 2021/05/05 21:58:27 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_mns		*g_mns;
 
-void				err_by_exit(char *arg, unsigned char *ext)
+void				err_by_exit(char *arg, int *ext)
 {
 	ft_util_putstr_fd(ANSI_RED "minishell: ", 2);
 	ft_util_putstr_fd(ANSI_MAG "cd: ", 2);
@@ -26,7 +26,7 @@ void				err_by_exit(char *arg, unsigned char *ext)
 	exit(255);
 }
 
-void				err_by_chdir(char *arg, unsigned char *ext)
+void				err_by_chdir(char *arg, int *ext)
 {
 	ft_util_putstr_fd(ANSI_RED "minishell: ", 2);
 	ft_util_putstr_fd(ANSI_MAG "cd: ", 2);
@@ -37,7 +37,7 @@ void				err_by_chdir(char *arg, unsigned char *ext)
 	*ext = 1;
 }
 
-void				err_by_command(char *par, unsigned char *ext)
+void				err_by_command(char *par, int *ext)
 {
 	ft_util_putstr_fd(ANSI_RED "minishell: ", 2);
 	ft_util_putstr_fd(ANSI_YEL, 2);
@@ -48,7 +48,7 @@ void				err_by_command(char *par, unsigned char *ext)
 	exit(127);
 }
 
-void				err_by_path(char *par, unsigned char *ext)
+void				err_by_path(char *par, int *ext)
 {
 	ft_util_putstr_fd(ANSI_RED "minishell: ", 2);
 	ft_util_putstr_fd(ANSI_YEL, 2);
@@ -59,7 +59,7 @@ void				err_by_path(char *par, unsigned char *ext)
 	exit(127);
 }
 
-void				err_by(char *msg, unsigned char *ext)
+void				err_by(char *msg, int *ext)
 {
 	ft_util_putstr_fd(ANSI_RED, 2);
 	ft_util_putstr_fd(msg, 2);

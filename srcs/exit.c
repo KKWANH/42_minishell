@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 16:57:42 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/03 17:38:30 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/05 22:06:18 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_mns		*g_mns;
 
-void				err_by_exit_many(unsigned char *ext)
+void				err_by_exit_many(int *ext)
 {
 	ft_util_putstr_fd(ANSI_RED, 2);
 	ft_util_putstr_fd("minishell: exit: too many arguments\n", 2);
@@ -24,9 +24,11 @@ void				err_by_exit_many(unsigned char *ext)
 
 void				ft_exit_check(t_par *par)
 {
-	int ext;
+	int				ext;
+	unsigned char	zzin_ext;
 
 	ext = 0;
+	zzin_ext = 0;
 	while (par->spl[1][ext])
 	{
 		if (!(ft_util_is_num(par->spl[1][ext])))
@@ -39,6 +41,7 @@ void				ft_exit_check(t_par *par)
 	if (g_mns->ext != ext)
 	{
 		ext = ft_util_atoi(par->spl[1]);
+		zzin_ext = ext;
 		g_mns->ext = ext;
 	}
 }

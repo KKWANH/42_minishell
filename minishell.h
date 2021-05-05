@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/05 16:50:59 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 02:51:39 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,16 @@
 ** color codes
 */
 
+# define ANSI_RES	"\x1b[0m"
+# define ANSI_BOL	"\x1b[1m"
+# define ANSI_ITA	"\x1b[3m"
 # define ANSI_RED	"\x1b[31m"
 # define ANSI_GRE	"\x1b[32m"
 # define ANSI_YEL	"\x1b[33m"
 # define ANSI_BLU	"\x1b[34m"
 # define ANSI_MAG	"\x1b[35m"
 # define ANSI_CYA	"\x1b[36m"
-# define ANSI_RES	"\x1b[0m"
+
 
 /*
 ** key codes
@@ -104,132 +107,130 @@ typedef struct		s_mns
 	struct s_env	*env;
 	char			**env_str;
 	char			*pth;
-	unsigned char	ext;
+	int				ext;
 	char			*tmp;
 	int				idx;
 	char			*lin;
 	int				test;
 	int				fst;
 	struct s_cmd	*cmd;
-	struct s_cap	cap;
+	struct s_cap	cap; 
 }					t_mns;
 
 /*
-** functions - init.c
+**	[init.c]
 */
-t_cap				ft_init_term_set
-	(t_cap cap, struct termios *s_term, struct termios *s_backup);
 void				ft_init
 	(char **str, struct termios *s_term, struct termios *s_backup);
 
 /*
-** functions - signal.c
+**	[signal.c]
 */
-void				ft_signal_handle_c(int sig);
-void				ft_signal_handle_rvc_slash(int sig);
 void				ft_signal_set(void);
 
 /*
-** functions - prompt.c
+**	[prompt.c]
 */
-void				ft_prompt_intro(void);
 void				ft_prompt_put_msg(void);
+void				ft_prompt_intro(void);
 
 /*
-** functions - cursor.c
+**	[cursor.c]
 */
 void				ft_cursor_whereisit(int *col, int *row);
-void				ft_cursor_read_eof(char *lin);
 int					ft_cursor(int *col, int *row, int tmp);
 
 /*
-** functions - key.c
+**	[key.c]
 */
-char				*ft_key_backspace
-	(int *col, int *row, char *lin, t_cap *cap);
+char				*ft_key_back(int *col, int *row, char *lin, t_cap *cap);
 void				ft_key_left(int *col, int *row, t_cap *cap);
 void				ft_key_right(int *col, int *row, char *lin, t_cap *cap);
 void				ft_key_up(int *col, int *row, char **lin, t_cap *cap);
 void				ft_key_down(int *col, int *row, char **lin, t_cap *cap);
 
 /*
-** functions - history.c
+**	[history.c]
 */
-char				*ft_history_down(void);
 char				*ft_history_up(void);
+char				*ft_history_down(void);
 void				ft_history_set_zero(void);
 
 /*
-** functions - exe.c
+**	[exe.c]
 */
 void				ft_exe(char *lin);
-void				ft_exe_loop(t_par *par);
-void				ft_exe_check(t_par *par);
-void				ft_execve(t_par *par, int res, int sta);
-int					ft_execve_nonap(char **par, int i);
 
 /*
-** functions - util_exe.c
+**	[util_exe.c]
 */
-char				**ft_util_parse_path(void);
 void				ft_util_dup_fd(t_par *par);
+char				**ft_util_parse_path(void);
 int					ft_util_is_execable(char *path);
-void				ft_util_close_pipe(t_par *par);
 void				ft_util_open_pipe(t_par *par);
+void				ft_util_close_pipe(t_par *par);
 
 /*
-** functions - parse.c
+**	[parse.c]
 */
 t_par				*ft_parse_cmd(char *lin, t_par *par);
 
 /*
-** functions - util_parse.c
+**	[parse_quotes.c]
+*/
+int					ft_parse_quotes(int *idx, char **spl);
+
+/*
+**	[parse_dollar.c]
+*/
+int					ft_parse_dollar(int *idx, char **spl);
+
+/*
+**	[util_parse.c]
 */
 int					ft_util_parse_list_rewind(t_par **par);
 int					ft_util_parse_list_free(t_par **par);
 t_par				*ft_util_parse_init(void);
 
 /*
-** functions - parse.c
+**	[redir.c]
 */
-void				ft_check_redir(t_par *par);
-void				ft_rebuild_redir(t_par *par, int i, int backup);
-void				ft_redir_out_append(t_par *par, int i);
-void				ft_redir_out_trunc(t_par *par, int i);
-void				ft_redir_in(t_par *par, int i);
+void				ft_redir_check(t_par *par);
 
 /*
-** functions - builtin.c
+**	[builtin.c]
 */
-int					ft_parse_check(char *cmd);
+int					ft_builtin_check(char *cmd);
 int					ft_builtin(t_par *par);
-int					ft_builtin_exe(t_par *par);
 
 /*
-** functions - exit.c
+**	[pwd.c]
+*/
+void				ft_pwd_cmd(t_par *par);
+
+/*
+**	[exit.c]
 */
 void				ft_exit_cmd(t_par *par);
 
 /*
-** functions - cd.c
+**	[cd.c]
 */
 void				ft_cd_cmd(t_par *par);
 
 /*
-** functions - echo.c
+**	[echo.c]
 */
 void				ft_echo_cmd(t_par *par);
 
 /*
-** functions - env.c
+**	[env.c]
 */
-char				*ft_env_name(char *str);
-char				*ft_env_value(char *str);
 t_env				*ft_env_init(void);
 void				ft_env_cmd(char **inp);
 
 /*
-** functions - util_env.c
+**	[util_env.c]
 */
 t_env				*ft_util_env_lstnew(char *nam, char *val);
 t_env				*ft_util_env_lstlast(t_env *lst);
@@ -237,37 +238,30 @@ void				ft_util_env_lstaddback(t_env **env, t_env *new);
 char				*ft_util_env_search(char *cmd);
 
 /*
-** functions - pwd.c
-*/
-void				ft_pwd_cmd(t_par *par);
-
-/*
-** functions - export.c
+**	[export.c]
 */
 void				ft_export_cmd(t_par *par);
 
 /*
-** functions - err.c
+**	[err.c]
 */
-void				err_by_exit(char *arg, unsigned char *ext);
-void				err_by_chdir(char *arg, unsigned char *ext);
-void				err_by_command(char *par, unsigned char *ext);
-void				err_by_path(char *par, unsigned char *ext);
-void				err_by(char *msg, unsigned char *ext);
+void				err_by_exit(char *arg, int *ext);
+void				err_by_chdir(char *arg, int *ext);
+void				err_by_command(char *par, int *ext);
+void				err_by_path(char *par, int *ext);
+void				err_by(char *msg, int *ext);
 
 /*
-** functions - util1.c
+**	[util1.c]
 */
 int					ft_util_strchr(const char *str, int chr);
 int					ft_util_strlen(char *str);
 void				ft_util_putstr_fd(char *str, int fil);
-char				ft_util_ndlchk
-	(const char *hay, const char *ndl, size_t len);
-char				*ft_util_strnstr
-	(const char *hay, const char *ndl, size_t len);
+char				ft_util_ndlchk(const char *hay, const char *ndl, size_t len);
+char				*ft_util_strnstr(const char *hay, const char *ndl, size_t len);
 
 /*
-** functions - util2.c
+**	[util2.c]
 */
 char				*ft_util_strjoin(char const *s1, char const *s2);
 char				*ft_util_strdup(char *src);
@@ -277,16 +271,16 @@ int					ft_util_strncmp(const char *s1, const char *s2,
 					unsigned int n);
 
 /*
-** functions - util3.c
+**	[util3.c]
 */
 int					ft_util_is_ascii(int chr);
 char				**ft_util_split_ufailed(char **res, int num);
 char				*ft_util_split_input(char *res, char *s, char c);
-int					ft_util_split_count(char *s, char c);
+int 				ft_util_split_count(char *s, char c);
 char				**ft_util_split(char const *s, char c);
 
 /*
-** functions - util4.c
+**	[util4.c]
 */
 int					ft_util_is_export(char chr);
 void				ft_util_freestrstr(char **str);
@@ -295,7 +289,7 @@ t_cmd				*ft_util_cmd_lstlast(t_cmd *lst);
 void				ft_util_cmd_lstaddback(t_cmd *cmd);
 
 /*
-** functions - util5.c
+**	[util5.c]
 */
 char				*ft_util_chajoin(char *line, char c);
 int					ft_util_putchar(int tc);
@@ -304,7 +298,7 @@ char				*ft_util_chaout(char *line, int indx);
 int					ft_util_is_num(char chr);
 
 /*
-** functions - util6.c
+**	[util6.c]
 */
 int					ft_util_cal(char *a, int res, int minus);
 int					ft_util_atoi(char *str);

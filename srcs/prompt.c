@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 15:40:05 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/03 19:51:42 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 02:52:49 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern t_mns		*g_mns;
 
 void				ft_prompt_put_msg(void)
 {
-	ft_util_putstr_fd(ANSI_BLU " - ", 1);
+	ft_util_putstr_fd(ANSI_BLU " - " ANSI_BOL, 1);
 	ft_util_putstr_fd(getenv("USER"), 1);
 	ft_util_putstr_fd(ANSI_CYA "'s minishell$ ", 1);
 	ft_util_putstr_fd(ANSI_RES, 1);

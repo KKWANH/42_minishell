@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 15:46:58 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 21:45:45 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/06 02:24:25 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_mns		*g_mns;
 
-char				*ft_key_backspace(int *col, int *row, char *lin, t_cap *cap)
+char				*ft_key_back(int *col, int *row, char *lin, t_cap *cap)
 {
 	if (cap->p_col >= *col)
 		return (lin);
@@ -87,7 +87,3 @@ void				ft_key_down(int *col, int *row, char **lin, t_cap *cap)
 	*lin = 0;
 	*lin = ft_util_strdup(txt);
 }
-
-//여기서 위아래일때 연결리스트 앞뒤 노드를 이동해서 보여주도록 만들어야 하고
-//엔터를 쳤을때 연결리스트 위치를 초기화 시켜야함
-//그러기 위해선 임시 연결리스트를 선언해서 가리키면 될듯

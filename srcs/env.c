@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 16:38:17 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 16:46:19 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/05 21:41:06 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char				*ft_env_name(char *str)
 		rst[idx] = str[idx];
 		++idx;
 	}
-	rst[idx] = '\0';
+	rst[idx] = 0;
 	return (rst);
 }
 
@@ -50,7 +50,7 @@ char				*ft_env_value(char *str)
 		rst[idx] = str[idx + eqr + 1];
 		++idx;
 	}
-	rst[idx] = '\0';
+	rst[idx] = 0;
 	return (rst);
 }
 

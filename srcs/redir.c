@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/02 17:22:57 by mac               #+#    #+#             */
-/*   Updated: 2021/05/04 00:02:47 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 02:37:36 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 	ls -l | grep d > par5
 */
 
-void	ft_redir_out_append(t_par *par, int i)
+void				ft_redir_out_append(t_par *par, int i)
 {
 	if (par->fd_out != -2)
 		close(par->fd_out);
@@ -31,7 +31,7 @@ void	ft_redir_out_append(t_par *par, int i)
 		open(par->spl[i + 1], O_WRONLY | O_APPEND | O_CREAT, 0644);
 }
 
-void	ft_redir_out_trunc(t_par *par, int i)
+void				ft_redir_out_trunc(t_par *par, int i)
 {
 	if (par->fd_out != -2)
 		close(par->fd_out);
@@ -39,7 +39,7 @@ void	ft_redir_out_trunc(t_par *par, int i)
 		open(par->spl[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 }
 
-void	ft_redir_in(t_par *par, int i)
+void				ft_redir_in(t_par *par, int i)
 {
 	if (par->fd_in != -2)
 		close(par->fd_in);
@@ -47,7 +47,7 @@ void	ft_redir_in(t_par *par, int i)
 		open(par->spl[i + 1], O_RDONLY);
 }
 
-void	ft_rebuild_redir(t_par *par, int i, int backup)
+void				ft_redir_rebuild(t_par *par, int i, int backup)
 {
 	while (par->spl[i])
 	{
@@ -71,9 +71,9 @@ void	ft_rebuild_redir(t_par *par, int i, int backup)
 	}
 }
 
-void	ft_check_redir(t_par *par)
+void				ft_redir_check(t_par *par)
 {
-	int i;
+	int				i;
 
 	i = 0;
 	while (par->spl[i])
@@ -91,5 +91,5 @@ void	ft_check_redir(t_par *par)
 	}
 	if (par->fd_in == -1 || par->fd_out == -1)
 		return ;
-	ft_rebuild_redir(par, 0, 0);
+	ft_redir_rebuild(par, 0, 0);
 }

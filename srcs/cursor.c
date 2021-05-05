@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:40:42 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 21:40:11 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/06 02:23:25 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int					ft_cursor(int *col, int *row, int tmp)
 	else if (tmp == DOWN_ARROW)
 		ft_key_down(col, row, &g_mns->lin, &g_mns->cap);
 	else if (tmp == BACKSPACE)
-		g_mns->lin = ft_key_backspace(col, row, g_mns->lin, &g_mns->cap);
+		g_mns->lin = ft_key_back(col, row, g_mns->lin, &g_mns->cap);
 	else if (tmp == CTRL_D)
 		ft_cursor_read_eof(g_mns->lin);
 	else if (tmp == ENTER)
@@ -72,8 +72,6 @@ int					ft_cursor(int *col, int *row, int tmp)
 		return (-1);
 	}
 	else
-	{
 		return (0);
-	}
 	return (1);
 }

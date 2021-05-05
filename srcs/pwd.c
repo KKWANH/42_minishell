@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 13:43:10 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/04 21:17:20 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/03 17:39:16 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void				ft_pwd_cmd(t_par *par)
 		ft_util_putstr_fd(ANSI_RED, 2);
 		ft_util_putstr_fd("minishell: pwd error\n", 2);
 		ft_util_putstr_fd(ANSI_RES, 2);
-		g_mns->ext = 1;
 		return ;
 	}
 	write(1, buf, ft_util_strlen(buf));

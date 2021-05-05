@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 16:32:00 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/03 17:43:30 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/06 02:43:38 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void				ft_echo_ext(char *par)
 	}
 }
 
-int					ft_flag_check(char *str)
+int					ft_echo_flagcheck(char *str)
 {
 	int idx;
 
@@ -48,11 +48,11 @@ int					ft_flag_check(char *str)
 	return (1);
 }
 
-int					ft_before_echo(t_par *par, int idx, int *flag)
+int					ft_echo_before(t_par *par, int idx, int *flag)
 {
 	while (par->spl[idx])
 	{
-		if (ft_flag_check(par->spl[idx]))
+		if (ft_echo_flagcheck(par->spl[idx]))
 		{
 			*flag = 1;
 			idx++;
@@ -70,7 +70,7 @@ void				ft_echo_cmd(t_par *par)
 
 	idx = 1;
 	flag = 0;
-	idx = ft_before_echo(par, idx, &flag);
+	idx = ft_echo_before(par, idx, &flag);
 	while (par->spl[idx])
 	{
 		if ((ft_util_strnstr(par->spl[idx],
@@ -83,6 +83,6 @@ void				ft_echo_cmd(t_par *par)
 		idx++;
 	}
 	if (!flag)
-		printf("\n");
+		ft_util_putstr_fd("\n", 1);
 	g_mns->ext = 0;
 }
