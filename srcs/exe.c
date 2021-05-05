@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 16:27:28 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 21:32:42 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,13 @@ void				ft_execve(t_par *par, int res, int sta)
 
 	pid = fork();
 	if (pid < 0)
-		err_by_pid(&g_mns->ext);
+		err_by("pid error\n", &g_mns->ext);
 	else if (pid == 0)
 	{
 		ft_util_open_pipe(par);
-		if (par->fd_in != -2)
-			dup2(par->fd_in, 0);
-		if (par->fd_out != -2)
-			dup2(par->fd_out, 1);
-		else if (par->spl[0][0] == '/')
+		ft_util_dup_fd(par);
+		ft_builtin_exe(par);
+		if (par->spl[0][0] == '/')
 			res = execve(par->spl[0], par->spl, g_mns->env_str);
 		else
 			res = ft_execve_nonap(par->spl, 0);
@@ -67,6 +65,28 @@ void				ft_execve(t_par *par, int res, int sta)
 	}
 }
 
+void				ft_exe_check(t_par *par)
+{
+	if (ft_parse_check(par->spl[0]) == 1)
+	{
+		if (par->pip == 0)
+			ft_builtin(par);
+		else
+			ft_execve(par, 0, 0);
+	}
+	else if (par->spl[0][0] == '/')
+	{
+		if (ft_util_is_execable(par->spl[0]))
+			ft_execve(par, 0, 0);
+		else
+			err_by_path(par->spl[0], &g_mns->ext);
+	}
+	else if ((ft_util_env_search("PATH")) != 0)
+		ft_execve(par, 0, 0);
+	else
+		err_by_path(par->spl[0], &g_mns->ext);
+}
+
 void				ft_exe_loop(t_par *par)
 {
 	while (par)
@@ -78,19 +98,7 @@ void				ft_exe_loop(t_par *par)
 			if (pipe(par->fil) == -1)
 				return ;
 		}
-		if (ft_parse_check(par->spl[0]) == 1)
-			ft_builtin(par);
-		else if (par->spl[0][0] == '/') //절대경로인가 
-		{
-			if (ft_util_is_execable(par->spl[0]))
-				ft_execve(par, 0, 0);
-			else
-				err_by_path(par->spl[0], &g_mns->ext);
-		}
-		else if ((ft_util_env_search("PATH")) != 0)
-			ft_execve(par, 0, 0);
-		else
-			err_by_path(par->spl[0], &g_mns->ext);
+		ft_exe_check(par);
 		ft_util_close_pipe(par);
 		par = par->nxt;
 	}
@@ -103,7 +111,6 @@ void				ft_exe(char *lin)
 
 	par = NULL;
 	cmd = NULL;
-	
 	if (lin[0] == '\0')
 		return ;
 	if (!(cmd = (t_cmd *)malloc(sizeof(t_cmd))))

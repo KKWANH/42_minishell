@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 13:59:51 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 16:32:31 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/05 15:51:07 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_env				*ft_util_env_lstnew(char *nam, char *val)
 
 	if (!(new = malloc(sizeof(t_env))))
 		return (NULL);
-	new->nam = nam;
-	new->val = val;
+	new->nam = ft_util_strdup(nam);
+	new->val = ft_util_strdup(val);
 	new->nxt = 0;
 	return (new);
 }
@@ -55,7 +55,7 @@ char				*ft_util_env_search(char *cmd)
 		if (ft_util_strcmp(tmp->nam, cmd) == 0)
 		{
 			if (tmp->val)
-				return (tmp->val);
+				return (ft_util_strdup(tmp->val));
 		}
 		tmp = tmp->nxt;
 	}

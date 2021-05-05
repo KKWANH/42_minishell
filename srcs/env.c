@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 16:38:17 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/29 23:43:36 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 16:46:19 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ char				*ft_env_name(char *str)
 
 	eqr = ft_util_strchr(str, '=');
 	idx = 0;
-	if (!(rst = (char *)malloc(sizeof(char) * eqr)))
+	if (!(rst = (char *)malloc(sizeof(char) * eqr + 1)))
 		return (NULL);
 	while (idx < eqr)
 	{
 		rst[idx] = str[idx];
 		++idx;
 	}
+	rst[idx] = '\0';
 	return (rst);
 }
 
@@ -42,13 +43,14 @@ char				*ft_env_value(char *str)
 	eqr = ft_util_strchr(str, '=');
 	len = ft_util_strlen(str);
 	idx = 0;
-	if (!(rst = (char *)malloc(sizeof(char) * (len - eqr))))
+	if (!(rst = (char *)malloc(sizeof(char) * (len - eqr + 1))))
 		return (NULL);
 	while ((idx + eqr + 1) <= len)
 	{
 		rst[idx] = str[idx + eqr + 1];
 		++idx;
 	}
+	rst[idx] = '\0';
 	return (rst);
 }
 
@@ -63,8 +65,8 @@ t_env				*ft_env_init(void)
 	idx = 1;
 	while (g_mns->env_str[idx])
 	{
-		new = ft_util_env_lstnew(
-			ft_env_name(g_mns->env_str[idx]), ft_env_value(g_mns->env_str[idx]));
+		new = ft_util_env_lstnew(ft_env_name(g_mns->env_str[idx]),
+				ft_env_value(g_mns->env_str[idx]));
 		ft_util_env_lstaddback(&rst, new);
 		++idx;
 	}

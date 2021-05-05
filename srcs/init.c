@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 09:32:16 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/03 23:39:07 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 21:42:05 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 extern t_mns		*g_mns;
 
 t_cap				ft_init_term_set
-		(t_cap cap, struct termios *s_term, struct termios *s_backup)
+	(t_cap cap, struct termios *s_term, struct termios *s_backup)
 {
 	tcgetattr(STDIN_FILENO, s_term);
 	tcgetattr(STDIN_FILENO, s_backup);
@@ -31,7 +31,7 @@ t_cap				ft_init_term_set
 }
 
 void				ft_init
-		(char **str, struct termios *s_term, struct termios *s_backup)
+	(char **str, struct termios *s_term, struct termios *s_backup)
 {
 	ft_signal_set();
 	g_mns->env_str = str;

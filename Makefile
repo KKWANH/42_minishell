@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/05/04 16:24:07 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/05/05 15:28:40 by kimkwanho        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ all : ${NAME}
 
 $(NAME) : ${OBJS}
 		@echo "\033[33m[Minishell compilation...]\033[0m"
-		${CC} -lncurses ${MAIN} ${SRCS} -o ${NAME}
+		${CC} ${MCHECK} -lncurses ${MAIN} ${SRCS} -o ${NAME}
 		@echo "\033[33m[Clean minishell...]\033[0m"
 		${RM} ${OBJS}
 

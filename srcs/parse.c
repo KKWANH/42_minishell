@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 15:33:06 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 16:34:52 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/05 16:17:26 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,35 @@ void				ft_parse_semi(int *jdx, int *idx, t_par **par)
 
 int					ft_parse_quotes(int *idx, char **spl)
 {
-	int				num;
+	int				stt;
+	int				end;
+	int				nm1; // : spl
+	int				nm2; // : rst
 	char			*rst;
 
-	num = 1;
-	if (!(rst = (char *)malloc(sizeof(char) * (ft_util_strlen(spl[0]) - 2))))
-		return (0);
-	while (num < ft_util_strlen(spl[*idx]) - 1)
+	stt = 0;
+	while (spl[*idx][stt] && spl[*idx][stt] != '\"')
+		++stt;
+	end = stt + 1;
+	while (spl[*idx][end] && spl[*idx][end] != '\"')
+		++end;
+	rst = (char *)malloc(sizeof(char) * (end - stt + 1));
+	nm1 = 0;
+	nm2 = 0;
+	while (nm1 < stt)
 	{
-		rst[num - 1] = spl[*idx][num];
-		++num;
+		rst[nm2] = spl[*idx][nm1];
+		++nm2;
+		++nm1;
 	}
+	++nm1;
+	while (nm1 < end)
+	{
+		rst[nm2] = spl[*idx][nm1];
+		++nm2;
+		++nm1;
+	}
+	rst[nm2] = '\0';
 	free(spl[*idx]);
 	spl[*idx] = 0;
 	spl[*idx] = rst;
@@ -50,19 +68,43 @@ int					ft_parse_quotes(int *idx, char **spl)
 
 int					ft_parse_dollar(int *idx, char **spl)
 {
+	int				stt;
 	int				num;
 	char			*nam;
 	char			*rst;
+	char			*tmp;
 
-	num = 1;
-	if (!(nam = (char *)malloc(sizeof(char) * (ft_util_strlen(spl[0]) - 1))))
-		return (0);
-	while (spl[*idx][num])
+	stt = 0;
+	num = 0;
+	while (spl[*idx][stt] && spl[*idx][stt] != '$')
+		++stt;
+	nam = (char *)malloc(sizeof(char) * (ft_util_strlen(spl[0]) - stt));
+	while (num < ft_util_strlen(spl[0]) - stt)
 	{
-		nam[num - 1] = spl[*idx][num];
+		nam[num] = spl[*idx][stt + 1 + num];
 		++num;
 	}
-	rst = ft_util_env_search(nam);
+	if (stt == 0)
+		rst = ft_util_env_search(nam);
+	else
+	{
+		tmp = ft_util_env_search(nam);
+		rst = (char *)malloc(sizeof(char) * (stt + ft_util_strlen(tmp) + 1));
+		num = 0;
+		while (num < stt)
+		{
+			rst[num] = spl[*idx][num];
+			++num;
+		}
+		stt = 0;
+		while (stt < ft_util_strlen(tmp))
+		{
+			rst[num + stt] = tmp[stt];
+			++stt;
+		}
+		rst[num + stt] = '\0';
+	}
+	free(nam);
 	free(spl[*idx]);
 	spl[*idx] = 0;
 	spl[*idx] = rst;

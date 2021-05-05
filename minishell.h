@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 10:01:56 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 21:39:37 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,16 +111,16 @@ typedef struct		s_mns
 	int				test;
 	int				fst;
 	struct s_cmd	*cmd;
-	struct s_cap	cap; 
+	struct s_cap	cap;
 }					t_mns;
 
 /*
 ** functions - init.c
 */
 t_cap				ft_init_term_set
-		(t_cap cap, struct termios *s_term, struct termios *s_backup);
+	(t_cap cap, struct termios *s_term, struct termios *s_backup);
 void				ft_init
-		(char **str, struct termios *s_term, struct termios *s_backup);
+	(char **str, struct termios *s_term, struct termios *s_backup);
 
 /*
 ** functions - signal.c
@@ -145,7 +145,8 @@ int					ft_cursor(int *col, int *row, int tmp);
 /*
 ** functions - key.c
 */
-char				*ft_key_backspace(int *col, int *row, char *lin, t_cap *cap);
+char				*ft_key_backspace
+	(int *col, int *row, char *lin, t_cap *cap);
 void				ft_key_left(int *col, int *row, t_cap *cap);
 void				ft_key_right(int *col, int *row, char *lin, t_cap *cap);
 void				ft_key_up(int *col, int *row, char **lin, t_cap *cap);
@@ -161,17 +162,20 @@ void				ft_history_set_zero(void);
 /*
 ** functions - exe.c
 */
-void				ft_parse_pid_zero(char *lin);
 void				ft_exe(char *lin);
+void				ft_exe_loop(t_par *par);
+void				ft_exe_check(t_par *par);
+void				ft_execve(t_par *par, int res, int sta);
+int					ft_execve_nonap(char **par, int i);
 
 /*
 ** functions - util_exe.c
 */
 char				**ft_util_parse_path(void);
+void				ft_util_dup_fd(t_par *par);
 int					ft_util_is_execable(char *path);
 void				ft_util_close_pipe(t_par *par);
 void				ft_util_open_pipe(t_par *par);
-
 
 /*
 ** functions - parse.c
@@ -198,7 +202,8 @@ void				ft_redir_in(t_par *par, int i);
 ** functions - builtin.c
 */
 int					ft_parse_check(char *cmd);
-void				ft_builtin(t_par *par);
+int					ft_builtin(t_par *par);
+int					ft_builtin_exe(t_par *par);
 
 /*
 ** functions - exit.c
@@ -243,7 +248,7 @@ void				err_by_exit(char *arg, unsigned char *ext);
 void				err_by_chdir(char *arg, unsigned char *ext);
 void				err_by_command(char *par, unsigned char *ext);
 void				err_by_path(char *par, unsigned char *ext);
-void				err_by_pid(unsigned char *ext);
+void				err_by(char *msg, unsigned char *ext);
 
 /*
 ** functions - util1.c
@@ -251,8 +256,10 @@ void				err_by_pid(unsigned char *ext);
 int					ft_util_strchr(const char *str, int chr);
 int					ft_util_strlen(char *str);
 void				ft_util_putstr_fd(char *str, int fil);
-char				ft_util_ndlchk(const char *hay, const char *ndl, size_t len);
-char				*ft_util_strnstr(const char *hay, const char *ndl, size_t len);
+char				ft_util_ndlchk
+	(const char *hay, const char *ndl, size_t len);
+char				*ft_util_strnstr
+	(const char *hay, const char *ndl, size_t len);
 
 /*
 ** functions - util2.c
@@ -270,7 +277,7 @@ int					ft_util_strncmp(const char *s1, const char *s2,
 int					ft_util_is_ascii(int chr);
 char				**ft_util_split_ufailed(char **res, int num);
 char				*ft_util_split_input(char *res, char *s, char c);
-int 				ft_util_split_count(char *s, char c);
+int					ft_util_split_count(char *s, char c);
 char				**ft_util_split(char const *s, char c);
 
 /*

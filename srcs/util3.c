@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:29:10 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/08 16:21:13 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 21:42:54 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char				*ft_util_split_input(char *res, char *s, char c)
 	return (res);
 }
 
-int 				ft_util_split_count(char *s, char c)
+int					ft_util_split_count(char *s, char c)
 {
 	int				i;
 	int				count;

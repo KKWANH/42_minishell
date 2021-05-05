@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:44:14 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/04 00:01:08 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 21:31:44 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,10 @@ void				err_by_path(char *par, unsigned char *ext)
 	exit(127);
 }
 
-void				err_by_pid(unsigned char *ext)
+void				err_by(char *msg, unsigned char *ext)
 {
 	ft_util_putstr_fd(ANSI_RED, 2);
-	ft_util_putstr_fd("pid error\n", 2);
+	ft_util_putstr_fd(msg, 2);
 	ft_util_putstr_fd(ANSI_RES, 2);
 	*ext = 1;
-	exit(1);
 }

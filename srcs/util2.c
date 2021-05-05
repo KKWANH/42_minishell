@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 08:21:38 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/20 17:13:33 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/05 15:55:36 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char				*ft_util_strjoin(char const *s1, char const *s2)
 	j = 0;
 	while (s1[j])
 		str[i++] = s1[j++];
-	free((char*)s1);
 	j = 0;
 	while (s2[j])
 		str[i++] = s2[j++];

@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 13:43:01 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/08 15:26:03 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/04 21:42:31 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ char				ft_util_ndlchk(const char *hay, const char *ndl, size_t len)
 	return (1);
 }
 
-char				*ft_util_strnstr(const char *hay, const char *ndl, size_t len)
+char				*ft_util_strnstr
+	(const char *hay, const char *ndl, size_t len)
 {
 	if (*ndl == '\0')
 		return ((char*)hay);
