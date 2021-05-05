@@ -6,13 +6,42 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 16:38:17 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/05 21:41:06 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/06 08:38:40 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 extern t_mns		*g_mns;
+
+void				ft_env_add_update(char *nam, char *val)
+{
+	t_env			*env;
+
+	if (!ft_util_env_search(nam))
+	{
+		env = ft_util_env_lstnew(nam, val);
+		ft_util_env_lstaddback(env);
+	}
+	else
+	{
+		env = g_mns->env;
+		while (env)
+		{
+			if (ft_util_strcmp(env->nam, nam) == 0)
+			{
+				free(env->val);
+				env->val = 0;
+				env->val = val;
+				break ;
+			}
+			else if (env->nxt)
+				env = env->nxt;
+			else
+				break ;
+		}
+	}
+}
 
 char				*ft_env_name(char *str)
 {
@@ -54,23 +83,21 @@ char				*ft_env_value(char *str)
 	return (rst);
 }
 
-t_env				*ft_env_init(void)
+void				ft_env_init(void)
 {
-	t_env			*rst;
 	t_env			*new;
 	int				idx;
 
-	rst = ft_util_env_lstnew(
+	g_mns->env = ft_util_env_lstnew(
 		ft_env_name(g_mns->env_str[0]), ft_env_value(g_mns->env_str[0]));
 	idx = 1;
 	while (g_mns->env_str[idx])
 	{
 		new = ft_util_env_lstnew(ft_env_name(g_mns->env_str[idx]),
 				ft_env_value(g_mns->env_str[idx]));
-		ft_util_env_lstaddback(&rst, new);
+		ft_util_env_lstaddback(new);
 		++idx;
 	}
-	return (rst);
 }
 
 void				ft_env_cmd(char **inp)

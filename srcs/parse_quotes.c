@@ -6,43 +6,60 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 17:43:14 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 02:47:26 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 06:30:27 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+char				*ft_parse_quotes_process
+	(char **spl, int *idx, int *jdx, char *str)
+{
+	int				num;
+	int				cnt;
+	char			*rst;
+	char			*rrst;
+
+	num = 0;
+	cnt = 0;
+	// if (ft_parse_quotes_is_close(spl, idx, *jdx) == -1)
+	// {
+	// 	(*jdx) += 1;
+	// 	return (str);
+	// }
+	while (spl[*idx][(*jdx) + 1 + cnt] && spl[*idx][(*jdx) + 1 + cnt] != '\"')
+		++cnt;
+	rst = (char *)malloc(sizeof(char) * (cnt + 1));
+	while (num < cnt)
+	{
+		rst[num] = spl[*idx][(*jdx) + 1 + num];
+		++num;
+	}
+	rst[num] = 0;
+	(*jdx) += cnt + 1;
+	rrst = ft_util_strjoin(str, rst);
+	free(rst);
+	rst = 0;
+	return (rrst);
+}
+
 int					ft_parse_quotes(int *idx, char **spl)
 {
-	int				stt;
-	int				end;
-	int				nm1; // : spl
-	int				nm2; // : rst
+	int				jdx;
 	char			*rst;
 
-	stt = 0;
-	while (spl[*idx][stt] && spl[*idx][stt] != '\"')
-		++stt;
-	end = stt + 1;
-	while (spl[*idx][end] && spl[*idx][end] != '\"')
-		++end;
-	rst = (char *)malloc(sizeof(char) * (end - stt + 1));
-	nm1 = 0;
-	nm2 = 0;
-	while (nm1 < stt)
+	jdx = 0;
+	rst = ft_util_strdup("");
+	while (spl[*idx][jdx])
 	{
-		rst[nm2] = spl[*idx][nm1];
-		++nm2;
-		++nm1;
+		if (spl[*idx][jdx] == '\"')
+			rst = ft_parse_quotes_process(spl, idx, &jdx, rst);
+		else
+		{
+			rst = ft_util_chajoin(rst, spl[*idx][jdx]);
+			++jdx;
+		}
 	}
-	++nm1;
-	while (nm1 < end)
-	{
-		rst[nm2] = spl[*idx][nm1];
-		++nm2;
-		++nm1;
-	}
-	rst[nm2] = '\0';
 	free(spl[*idx]);
 	spl[*idx] = 0;
 	spl[*idx] = rst;

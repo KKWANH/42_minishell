@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 13:59:51 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/05 21:43:15 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/06 08:39:59 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,17 @@ t_env				*ft_util_env_lstlast(t_env *lst)
 	return (lst);
 }
 
-void				ft_util_env_lstaddback(t_env **env, t_env *new)
+void				ft_util_env_lstaddback(t_env *new)
 {
-	if (!env || !new)
+	t_env			*tmp;
+
+	tmp = g_mns->env;
+	if (!tmp || !new)
 		return ;
-	if (!(*env))
-		*env = new;
+	if (!tmp)
+		tmp = new;
 	else
-		(ft_util_env_lstlast(*env))->nxt = new;
+		(ft_util_env_lstlast(tmp))->nxt = new;
 }
 
 char				*ft_util_env_search(char *cmd)

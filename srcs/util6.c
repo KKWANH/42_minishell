@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 21:42:08 by pjh399            #+#    #+#             */
-/*   Updated: 2021/05/06 02:22:22 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 06:43:13 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,27 @@ int					ft_util_atoi(char *str)
 		return (0);
 	a = str;
 	return (ft_util_cal(a, res, i));
+}
+
+char				**ft_util_strstrjoin(char **spl, char *str)
+{
+	char			**rst;
+	int				cnt;
+	int				idx;
+
+	if (!spl || !str)
+		return (NULL);
+	cnt = 0;
+	while (spl[cnt])
+		++cnt;
+	rst = (char **)malloc(sizeof(char *) * (cnt + 1));
+	idx = 0;
+	while (idx < cnt)
+	{
+		rst[idx] = spl[idx];
+		++idx;
+	}
+	rst[idx] = str;
+	ft_util_freestrstr(spl);
+	return (rst);
 }

@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 02:51:39 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 08:39:39 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,11 @@ void				ft_util_close_pipe(t_par *par);
 t_par				*ft_parse_cmd(char *lin, t_par *par);
 
 /*
+**	[parse_split.c]
+*/
+char				**ft_parse_split(char *lin);
+
+/*
 **	[parse_quotes.c]
 */
 int					ft_parse_quotes(int *idx, char **spl);
@@ -226,7 +231,8 @@ void				ft_echo_cmd(t_par *par);
 /*
 **	[env.c]
 */
-t_env				*ft_env_init(void);
+void				ft_env_add_update(char *nam, char *val);
+void				ft_env_init(void);
 void				ft_env_cmd(char **inp);
 
 /*
@@ -234,7 +240,7 @@ void				ft_env_cmd(char **inp);
 */
 t_env				*ft_util_env_lstnew(char *nam, char *val);
 t_env				*ft_util_env_lstlast(t_env *lst);
-void				ft_util_env_lstaddback(t_env **env, t_env *new);
+void				ft_util_env_lstaddback(t_env *new);
 char				*ft_util_env_search(char *cmd);
 
 /*
@@ -302,5 +308,6 @@ int					ft_util_is_num(char chr);
 */
 int					ft_util_cal(char *a, int res, int minus);
 int					ft_util_atoi(char *str);
+char				**ft_util_strstrjoin(char **spl, char *str);
 
 #endif

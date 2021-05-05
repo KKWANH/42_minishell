@@ -25,6 +25,17 @@ extern t_mns		*g_mns;
 **	 4. if 
 */
 
+int					ft_export_err(char *str)
+{
+	ft_util_putstr_fd(ANSI_RED "minishell: ", 2);
+	ft_util_putstr_fd(ANSI_MAG "export: '", 2);
+	ft_util_putstr_fd(ANSI_YEL, 2);
+	ft_util_putstr_fd(str, 2);
+	ft_util_putstr_fd(ANSI_MAG "': Not a valid identifier\n", 2);
+	ft_util_putstr_fd(ANSI_RES, 2);
+	return (0);
+}
+
 void				ft_export_print(void)
 {
 	t_env			*env;
@@ -44,27 +55,57 @@ void				ft_export_print(void)
 	}
 }
 
-/*
-** HOW TO PROCESS COMMAND [EXPORT] by kkim
-**	0. Check that argument is empty
-**	 0.0. if that so - sort env and put to command like [declare -x NAME="VALUE"]
-**	1. Make list of argument. Of course seperate them to NAME and VALUE.
-*/
+int					ft_export_process(char **spl, int *idx, int *flg)
+{
+	int				jdx;
+	int				wht;
+	char			*nam;
+	char			*val;
+
+	jdx = 0;
+	wht = 1;
+	nam = ft_util_strdup("");
+	val = ft_util_strdup("");
+	while (spl[(*idx)][jdx])
+	{
+		if (ft_util_is_alpha(spl[*idx][jdx]) == 1)
+		{
+			if (wht == 1)
+				nam = ft_util_chajoin(nam, spl[*idx][jdx]);
+			else
+				val = ft_util_chajoin(val, spl[*idx][jdx]);
+		}
+		else
+		{
+			if (spl[*idx][jdx] == '=')
+				wht = 2;
+			else
+				return (ft_export_err(spl[*idx]));
+		}
+		++jdx;
+	}
+	ft_env_add_update(nam, val);
+	(*flg) = 1;
+	++(*idx);
+	return (0);
+}
+
 void				ft_export_cmd(t_par *par)
 {
 	int				flg;
 	int				idx;
 
 	flg = 0;
-	idx = 0;
-	if (!par)
-		printf("");
-	// while (par->spl[idx])
-	// {
-	// 	// if (ft_export_process(par->spl, &idx) == 1)
-	// 	// 	flg = 1;
-	// 	++idx;
-	// }
+	idx = 1;
+	while (par->spl[idx])
+	{
+		if (par->spl[idx][0] == '=')
+		{
+			ft_export_err(par->spl[idx++]);
+			continue ;
+		}
+		ft_export_process(par->spl, &idx, &flg);
+	}
 	if (flg == 0)
 		ft_export_print();
 

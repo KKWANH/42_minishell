@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 09:32:16 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 02:19:13 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 08:37:21 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void				ft_init
 {
 	ft_signal_set();
 	g_mns->env_str = str;
-	g_mns->env = ft_env_init();
+	g_mns->env = NULL;
+	ft_env_init();
 	g_mns->pth = 0;
 	g_mns->ext = 0;
 	g_mns->tmp = NULL;
