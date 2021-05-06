@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:27:11 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/06 16:55:14 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 17:33:15 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,19 @@ char				**ft_util_parse_path(void)
 int					ft_util_is_execable(char *path)
 {
 	struct stat		test;
+	int				rst;
 
-	if (stat(path, &test) == 0)
-		return (1);
-	else
+	rst = stat(path, &test);
+	test.st_mode = test.st_mode & S_IFMT;
+	if (test.st_mode == S_IFDIR)
+	{
+		printf("%s is directory\n", path);
+		g_mns->ext = 126;
 		return (0);
+	}
+	if (rst == -1)
+		return (0);
+	return (1);
 }
 
 //파이프는 fil[1]으로 받아서 fil[0]로 나감

@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 16:36:53 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 17:31:19 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void				ft_exe_loop(t_par *par)
 	while (par)
 	{
 		ft_redir_check(par);
-		if (g_mns->ext == 1 || par->spl[0] == NULL)
+		if (g_mns->ext == 1 || par->fd_out == -1 || par->spl[0] == NULL)
 		{
 			ft_util_close_pipe(par);
 			return ;

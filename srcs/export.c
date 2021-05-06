@@ -68,7 +68,7 @@ int					ft_export_process(char **spl, int *idx, int *flg)
 	val = ft_util_strdup("");
 	while (spl[(*idx)][jdx])
 	{
-		if (ft_util_is_alpha(spl[*idx][jdx]) == 1)
+		if (ft_util_is_alpha(spl[*idx][jdx]) == 1 )
 		{
 			if (wht == 1)
 				nam = ft_util_chajoin(nam, spl[*idx][jdx]);
