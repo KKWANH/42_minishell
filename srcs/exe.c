@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 17:31:19 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 22:51:53 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void				ft_exe_check(t_par *par)
 	{
 		if (par->pip == 0 && ft_util_strcmp(par->spl[0], "exit") == 0)
 			ft_exit_cmd(par);
-		if (par->pip == 0 && ft_util_strcmp(par->spl[0], "cd") == 0)
+		else if (par->pip == 0 && ft_util_strcmp(par->spl[0], "cd") == 0)
 			ft_cd_cmd(par);
-		if (par->pip == 0 && ft_util_strcmp(par->spl[0], "export") == 0)
+		else if (par->pip == 0 && ft_util_strcmp(par->spl[0], "export") == 0)
 			ft_export_cmd(par);
-		if (par->pip == 0 && ft_util_strcmp(par->spl[0], "unset") == 0)
+		else if (par->pip == 0 && ft_util_strcmp(par->spl[0], "unset") == 0)
 			ft_unset_cmd(par);
 		else
 			ft_execve(par, 0, 0);
@@ -138,20 +138,6 @@ void				ft_exe_loop(t_par *par)
 		ft_exe_check(par);
 		ft_util_close_pipe(par);
 		par = par->nxt;
-		// if (par->typ == TYPE_PIPE || (par->pre && par->pre->typ == TYPE_PIPE))
-		// {
-		// 	par->pip = 1;
-		// 	if (pipe(par->fil) == -1)
-		// 		return ;
-		// }
-		// if (par->spl[0] == NULL)
-		// {
-		// 	ft_util_close_pipe(par);
-		// 	return ;
-		// }
-		// ft_exe_check(par);
-		// ft_util_close_pipe(par);
-		// par = par->nxt;
 	}
 }
 

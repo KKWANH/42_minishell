@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parse_space_token.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juhpark <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:12:17 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/06 16:25:27 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/07 01:39:39 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_mns			*g_mns;
+t_mns				*g_mns;
 
-int				tocken_semi(char *lin, int *ret, int indx)
+int					tocken_semi(char *lin, int *ret, int indx)
 {
 	if (indx == 0 || ft_util_strlen(lin) == 1 ||
 			lin[indx + 1] == ';' || lin[indx + 1] == '|' ||
@@ -31,7 +31,7 @@ int				tocken_semi(char *lin, int *ret, int indx)
 	return (1);
 }
 
-int				tocken_pipe(char *lin, int *ret, int indx)
+int					tocken_pipe(char *lin, int *ret, int indx)
 {
 	if (indx == 0 || ft_util_strlen(lin) == 1 ||
 			lin[indx + 1] == ';' || lin[indx + 1] == '|' ||
@@ -49,7 +49,7 @@ int				tocken_pipe(char *lin, int *ret, int indx)
 	return (1);
 }
 
-int				tocken_decresc(char *lin, int *ret, int indx)
+int					tocken_decresc(char *lin, int *ret, int indx)
 {
 	if (indx == 0 || ft_util_strlen(lin) == 1 || lin[indx + 1] == '\0' ||
 			lin[indx + 1] == ';' || lin[indx + 1] == '<' ||
@@ -70,7 +70,7 @@ int				tocken_decresc(char *lin, int *ret, int indx)
 	return (1);
 }
 
-int				tocken_cresc(char *lin, int *ret, int indx)
+int					tocken_cresc(char *lin, int *ret, int indx)
 {
 	if (indx == 0 || ft_util_strlen(lin) == 1 || lin[indx + 1] == '\0' ||
 			lin[indx + 1] == ';' || lin[indx + 1] == '<' ||
@@ -90,11 +90,13 @@ int				tocken_cresc(char *lin, int *ret, int indx)
 	return (1);
 }
 
-int				ft_count_sp_token(char *lin)
+int					ft_count_sp_token(char *lin, int flg)
 {
-	int			ret;
-	int			i;
+	int				ret;
+	int				i;
 
+	if (flg < 0)
+		return (0);
 	ret = 0;
 	i = 0;
 	while (lin[i])

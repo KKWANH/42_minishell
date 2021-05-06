@@ -14,17 +14,6 @@
 
 extern t_mns		*g_mns;
 
-/*
-** HOW TO PROCESS CHECKING FOR LINE
-**	while loop
-**	 0. if [ ] : skip
-**	 1. if ["] or ['] : get str.
-**	  1.0. if doesn't close with ["] or ['] : return -1
-**	 2. if str(name) doesn't have mate;str(value) : ignore it
-**	 3. if [$] : get all alpha until another character comes, process it to str
-**	 4. if 
-*/
-
 int					ft_export_err(char *str)
 {
 	ft_util_putstr_fd(ANSI_RED "minishell: ", 2);
@@ -55,58 +44,58 @@ void				ft_export_print(void)
 	}
 }
 
-int					ft_export_process(char **spl, int *idx, int *flg)
+int					ft_export_process(char **s, int *i, int *f)
 {
-	int				jdx;
-	int				wht;
-	char			*nam;
-	char			*val;
+	int				j;
+	int				e;
+	char			*n;
+	char			*v;
 
-	jdx = 0;
-	wht = 1;
-	nam = ft_util_strdup("");
-	val = ft_util_strdup("");
-	while (spl[(*idx)][jdx])
+	j = 0;
+	e = 0;
+	n = ft_util_strdup("");
+	v = ft_util_strdup("");
+	while (s[*i][j])
 	{
-		if (ft_util_is_alpha(spl[*idx][jdx]) == 1 )
+		if (s[*i][j] == '=')
+			e = 1;
+		else if (ft_util_is_num(s[*i][j]) == 1)
 		{
-			if (wht == 1)
-				nam = ft_util_chajoin(nam, spl[*idx][jdx]);
-			else
-				val = ft_util_chajoin(val, spl[*idx][jdx]);
+			if (e == 0 && j == 0)
+				return (ft_export_err(s[(*i)++]));
+			if (e == 0)
+				n = ft_util_chajoin(n, s[*i][j]);
+			if (e == 1)
+				v = ft_util_chajoin(v, s[*i][j]);
 		}
-		else
+		else if (ft_util_is_alpha(s[*i][j]) == 1)
 		{
-			if (spl[*idx][jdx] == '=')
-				wht = 2;
-			else
-				return (ft_export_err(spl[*idx]));
+			if (e == 0)
+				n = ft_util_chajoin(n, s[*i][j]);
+			if (e == 1)
+				v = ft_util_chajoin(v, s[*i][j]);
 		}
-		++jdx;
+		else if (e == 1)
+			ft_util_chajoin(v, s[*i][j]);
+		++j;
 	}
-	ft_env_add_update(nam, val);
-	(*flg) = 1;
-	++(*idx);
-	return (0);
+	ft_env_add_update(n, v);
+	(*f) = 1;
+	(*i) += 1;
+	return (1);
 }
 
 void				ft_export_cmd(t_par *par)
 {
-	int				flg;
 	int				idx;
+	int				flg;
 
-	flg = 0;
 	idx = 1;
+	flg = 0;
 	while (par->spl[idx])
 	{
-		if (par->spl[idx][0] == '=')
-		{
-			ft_export_err(par->spl[idx++]);
-			continue ;
-		}
 		ft_export_process(par->spl, &idx, &flg);
 	}
 	if (flg == 0)
 		ft_export_print();
-
 }

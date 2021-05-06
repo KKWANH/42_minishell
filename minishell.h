@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 18:13:15 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 01:43:55 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,12 @@
 /*
 ** structs
 */
+
+typedef struct		s_quo
+{
+	int				d_open;
+	int				s_open;
+}					t_quo;
 
 typedef struct		s_env
 {
@@ -187,7 +193,7 @@ void				err_by_syntax(int *ext);
 /*
 **	[parse_space_tocken.c]
 */
-int					ft_count_sp_token(char *lin);
+int					ft_count_sp_token(char *lin, int flg);
 int					token_semi(char *lin, int ret, int indx);
 int					token_pipe(char *lin, int ret, int indx);
 int					token_decresc(char *lin, int ret, int indx);
