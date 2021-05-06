@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/02 14:48:44 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 02:24:09 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 17:58:37 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char				*ft_history_up(void)
 	t_cmd			*tmp;
 
 	if (g_mns->fst == 0)
-		return (NULL);
+		return (ft_util_strdup(""));
 	tmp = ft_util_cmd_lstlast(g_mns->cmd);
 	while (tmp)
 	{
@@ -46,7 +46,7 @@ char				*ft_history_down(void)
 	t_cmd			*tmp;
 
 	if (g_mns->fst == 0)
-		return (NULL);
+		return (ft_util_strdup(""));
 	tmp = g_mns->cmd;
 	while (tmp)
 	{
@@ -72,7 +72,6 @@ void				ft_history_set_zero(void)
 	t_cmd			*tmp;
 
 	tmp = g_mns->cmd;
-	g_mns->fst = 1;
 	while (tmp)
 	{
 		tmp->cur = 0;

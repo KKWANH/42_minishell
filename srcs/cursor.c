@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:40:42 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 16:45:15 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 17:58:50 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int					ft_cursor(int *col, int *row, int tmp)
 	{
 		write(1, "\n", 1);
 		g_mns->idx = -1;
+		g_mns->fst = 1;
 		return (-1);
 	}
 	else

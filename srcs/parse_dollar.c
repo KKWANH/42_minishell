@@ -6,11 +6,13 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 17:43:14 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 02:22:38 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 18:18:18 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+extern t_mns		*g_mns;
 
 char				*ft_parse_dollar_process(char *lin, int *jdx, char *str)
 {
@@ -51,7 +53,15 @@ int					ft_parse_dollar(int *idx, char **spl)
 	while (spl[*idx][jdx])
 	{
 		if (spl[*idx][jdx] == '$')
+		{
+			if (spl[*idx][jdx + 1] == '?')
+			{
+				rst = ft_util_strjoin(rst, ft_util_itoa(g_mns->ext));
+				jdx += 2;
+				continue ;
+			}
 			rst = ft_parse_dollar_process(spl[*idx], &jdx, rst);
+		}
 		else
 		{
 			rst = ft_util_chajoin(rst, spl[*idx][jdx]);

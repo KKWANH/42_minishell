@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 15:33:06 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 16:56:10 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 17:46:34 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ t_par				*ft_parse_cmd(char *lin, t_par *par)
 		return (0);
 	if (par == NULL)
 		par = ft_util_parse_init();
-	// spl = ft_util_split(lin, ' ');
 	spl = ft_parse_split(tmp);
+	free(tmp);
 	while (spl[idx])
 	{
 		if (ft_parse_process_special(spl, &par, &idx, &jdx) == 1)

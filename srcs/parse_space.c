@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:19 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/06 16:50:02 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 18:16:15 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,16 @@ char			*ft_input_lin(char *lin, char *ret, int i, int j)
 	{
 		if (lin[j] == ';' || lin[j] == '|' || lin[j] == '<' || lin[j] == '>')
 		{
-			if (lin[j - 1] != ' ')
+			if (lin[j - 1] != ' ' && (lin[j] == '>' && lin[j] != '>'))
 			{
-				ret[i] = ' ';
-				i++;
+				ret[i++] = ' ';
 			}
 			ret[i++] = lin[j++];
 			if (lin[j + 1] == '\0')
 				break ;
-			if (lin[j] != ' ' || (lin[j - 1] == '>' && lin[j] != '>'))
+			if (lin[j] != ' ' && (lin[j - 1] == '>' && lin[j] != '>'))
 			{
-				ret[i] = ' ';
-				i++;
+				ret[i++] = ' ';
 			}
 		}
 		ret[i++] = lin[j++];
@@ -63,5 +61,6 @@ char			*ft_parse_space(char *lin)
 		return (0);
 	}
 	ret = ft_input_lin(lin, ret, 0, 0);
+	printf("test : %s\n", ret);
 	return (ret);
 }

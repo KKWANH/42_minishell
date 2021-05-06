@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 16:55:14 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 18:13:15 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,5 +328,12 @@ int					ft_util_is_num(char chr);
 int					ft_util_cal(char *a, int res, int minus);
 int					ft_util_atoi(char *str);
 char				**ft_util_strstrjoin(char **spl, char *str);
+size_t				ft_util_itoa_num_length(int nbr);
+char				*ft_util_itoa(int n);
+
+/*
+**	[util7.c]
+*/
+
 
 #endif
