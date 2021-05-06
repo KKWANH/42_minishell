@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:27:11 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/06 02:40:13 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 16:55:14 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,9 @@ extern t_mns		*g_mns;
 void				ft_util_dup_fd(t_par *par)
 {
 	if (par->fd_in != -2)
-	{
-		if (dup2(par->fd_in, 0) == -1)
-		{
-			err_by("fd error\n", &g_mns->ext);
-			exit(1);
-		}
-	}
+		dup2(par->fd_in, 0);
 	if (par->fd_out != -2)
-	{
-		if (dup2(par->fd_out, 1) == -1)
-		{
-			err_by("fd error\n", &g_mns->ext);
-			exit(1);
-		}
-	}
+		dup2(par->fd_out, 1);
 }
 
 char				**ft_util_parse_path(void)

@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/13 14:40:42 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 02:23:25 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 16:45:15 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void				ft_cursor_read_eof(char *lin)
 	if (ft_util_strlen(lin) == 0)
 	{
 		printf("exit\n");
-		exit(0);
+		exit(g_mns->ext);
 	}
 }
 

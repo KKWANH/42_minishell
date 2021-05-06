@@ -6,22 +6,13 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 10:47:19 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/06 14:55:46 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 16:53:00 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 t_mns				*g_mns;
-
-/*
-typedef struct		s_env
-{
-	char			*nam;
-	char			*val;
-	struct s_env	*nxt;
-}					t_env;
-*/
 
 void				err_unset(char *cmd)
 {

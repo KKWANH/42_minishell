@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 15:32:00 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 16:55:14 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <termios.h>
 # include <curses.h>
 # include <termcap.h>
+# include <errno.h>
+# include <string.h>
 
 /*
 ** color codes
@@ -174,6 +176,23 @@ void				ft_util_close_pipe(t_par *par);
 **	[parse.c]
 */
 t_par				*ft_parse_cmd(char *lin, t_par *par);
+
+/*
+**	[parse_space.c]
+*/
+char				*ft_parse_space(char *lin);
+char				*ft_input_lin(char *lin, char *ret, int i, int j);
+void				err_by_syntax(int *ext);
+
+/*
+**	[parse_space_tocken.c]
+*/
+int					ft_count_sp_token(char *lin);
+int					token_semi(char *lin, int ret, int indx);
+int					token_pipe(char *lin, int ret, int indx);
+int					token_decresc(char *lin, int ret, int indx);
+int					token_cresc(char *lin, int ret, int indx);
+
 
 /*
 **	[parse_split.c]
