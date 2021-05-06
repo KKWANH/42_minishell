@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/02 17:22:57 by mac               #+#    #+#             */
-/*   Updated: 2021/05/06 16:47:43 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 17:44:45 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void				ft_redir_check(t_par *par)
 			ft_redir_in(par, i);
 		i++;
 	}
-	if (g_mns->ext == 1)
+	if (par->fd_in == -1 || par->fd_out == -1)
 		return ;
 	ft_redir_rebuild(par, 0, 0);
 	g_mns->ext = 0;
