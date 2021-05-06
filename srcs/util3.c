@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:29:10 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/08 16:21:13 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 12:27:38 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ int 				ft_util_split_count(char *s, char c)
 		{
 			while (s[i] == c)
 				i++;
-			if (s[i] == 0)
-				break ;
 			count++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 02:38:18 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 13:25:14 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ void				ft_exe_check(t_par *par)
 			ft_exit_cmd(par);
 		if (par->pip == 0 && ft_util_strcmp(par->spl[0], "cd") == 0)
 			ft_cd_cmd(par);
+		if (par->pip == 0 && ft_util_strcmp(par->spl[0], "export") == 0)
+			ft_export_cmd(par);
+		if (par->pip == 0 && ft_util_strcmp(par->spl[0], "unset") == 0)
+			ft_unset_cmd(par);
 		else if (ft_builtin_check(par->spl[0]) == 1)
 			ft_execve(par, 0, 0);
 	}

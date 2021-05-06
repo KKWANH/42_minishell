@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/05/06 02:48:01 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/05/06 14:55:20 by kimkwanho        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRCS		=	srcs/init.c \
 				srcs/exe.c \
 				srcs/util_exe.c \
 				srcs/parse.c \
-				srcs/parse_quotes.c \
+				srcs/parse_split.c \
 				srcs/parse_dollar.c \
 				srcs/util_parse.c \
 				srcs/redir.c \
@@ -35,6 +35,7 @@ SRCS		=	srcs/init.c \
 				srcs/env.c \
 				srcs/util_env.c \
 				srcs/export.c \
+				srcs/unset.c \
 				srcs/err.c \
 				srcs/util1.c \
 				srcs/util2.c \

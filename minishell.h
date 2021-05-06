@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 08:39:39 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 15:32:00 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,11 +181,6 @@ t_par				*ft_parse_cmd(char *lin, t_par *par);
 char				**ft_parse_split(char *lin);
 
 /*
-**	[parse_quotes.c]
-*/
-int					ft_parse_quotes(int *idx, char **spl);
-
-/*
 **	[parse_dollar.c]
 */
 int					ft_parse_dollar(int *idx, char **spl);
@@ -247,6 +242,11 @@ char				*ft_util_env_search(char *cmd);
 **	[export.c]
 */
 void				ft_export_cmd(t_par *par);
+
+/*
+**	[unset.c]
+*/
+void				ft_unset_cmd(t_par *par);
 
 /*
 **	[err.c]

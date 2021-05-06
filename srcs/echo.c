@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 16:32:00 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 02:43:38 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/06 15:33:43 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ void				ft_echo_cmd(t_par *par)
 	idx = ft_echo_before(par, idx, &flag);
 	while (par->spl[idx])
 	{
-		if ((ft_util_strnstr(par->spl[idx],
-						"$?", ft_util_strlen(par->spl[idx]))) != NULL)
-			ft_echo_ext(par->spl[idx]); //요건 좀 바꿔야할듯
-		else
+		// if ((ft_util_strnstr(par->spl[idx],
+		// 				"$?", ft_util_strlen(par->spl[idx]))) != NULL)
+		// 	ft_echo_ext(par->spl[idx]); //요건 좀 바꿔야할듯
+		// else
 			ft_util_putstr_fd(par->spl[idx], 1);
 		if (par->spl[idx + 1] != NULL)
 			write(1, " ", 1);
