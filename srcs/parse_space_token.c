@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:12:17 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/07 01:39:39 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 03:19:30 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,102 +14,92 @@
 
 t_mns				*g_mns;
 
-int					tocken_semi(char *lin, int *ret, int indx)
+int					tocken_semi(char *lin, char *ret, int *indx)
 {
-	if (indx == 0 || ft_util_strlen(lin) == 1 ||
-			lin[indx + 1] == ';' || lin[indx + 1] == '|' ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == ';') ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == '|'))
+	if (*indx == 0 || ft_util_strlen(lin) == 1 ||
+			lin[*indx + 1] == ';' || lin[*indx + 1] == '|' ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == ';') ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == '|'))
+		return (0);
+	if (lin[*indx - 1] != ' ')
+		ret = ft_util_strjoin(ret, " ;");
+	if (lin[*indx + 1] != ' ')
+		ret = ft_util_chajoin(ret, ' ');
+	return (1);
+}
+
+int					tocken_pipe(char *lin, char *ret, int *indx)
+{
+	if (*indx == 0 || ft_util_strlen(lin) == 1 ||
+			lin[*indx + 1] == ';' || lin[*indx + 1] == '|' ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == ';') ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == '|') ||
+			lin[*indx + 1] == '\0')
 	{
 		err_by_syntax(&g_mns->ext);
 		return (0);
 	}
-	if (lin[indx - 1] != ' ')
-		*ret += 1;
-	if (lin[indx + 1] != ' ')
-		*ret += 1;
+	if (lin[*indx - 1] != ' ')
+		ret = ft_util_strjoin(ret, " |");
+	if (lin[*indx + 1] != ' ')
+		ret = ft_util_chajoin(ret, ' ');
 	return (1);
 }
 
-int					tocken_pipe(char *lin, int *ret, int indx)
+int					tocken_decresc(char *lin, char *ret, int *indx)
 {
-	if (indx == 0 || ft_util_strlen(lin) == 1 ||
-			lin[indx + 1] == ';' || lin[indx + 1] == '|' ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == ';') ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == '|') ||
-			lin[indx + 1] == '\0')
-	{
-		err_by_syntax(&g_mns->ext);
+	if (*indx == 0 || ft_util_strlen(lin) == 1 || lin[*indx + 1] == '\0' ||
+			lin[*indx + 1] == ';' || lin[*indx + 1] == '<' ||
+			lin[*indx + 1] == '|' ||
+			(lin[*indx + 1] == '>' && lin[*indx + 2] == '>') ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == ';') ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == '|') ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == '<') ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == '>'))
 		return (0);
+	if (lin[*indx - 1] != ' ' && lin[*indx - 1] != '>')
+	{
+		ret = ft_util_strjoin(ret, " >");
+		if (lin[*indx + 1] == '>')
+		{
+			ret = ft_util_chajoin(ret, '>');
+			*indx += 1;
+		}
 	}
-	if (lin[indx - 1] != ' ')
-		*ret += 1;
-	if (lin[indx + 1] != ' ')
-		*ret += 1;
+	if (lin[*indx + 1] != ' ' && lin[*indx - 1] != '>')
+		ret = ft_util_chajoin(ret, ' ');
 	return (1);
 }
 
-int					tocken_decresc(char *lin, int *ret, int indx)
+int					tocken_cresc(char *lin, char *ret, int *indx)
 {
-	if (indx == 0 || ft_util_strlen(lin) == 1 || lin[indx + 1] == '\0' ||
-			lin[indx + 1] == ';' || lin[indx + 1] == '<' ||
-			lin[indx + 1] == '|' ||
-			(lin[indx + 1] == '>' && lin[indx + 2] == '>') ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == ';') ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == '|') ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == '<') ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == '>'))
-	{
-		err_by_syntax(&g_mns->ext);
+	if (*indx == 0 || ft_util_strlen(lin) == 1 || lin[*indx + 1] == '\0' ||
+			lin[*indx + 1] == ';' || lin[*indx + 1] == '<' ||
+			lin[*indx + 1] == '|' || lin[*indx + 1] == '>' ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == '<') ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == ';') ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == '<') ||
+			(lin[*indx + 1] == ' ' && lin[*indx + 2] == '|'))
 		return (0);
+	if (lin[*indx - 1] != ' ')
+	{
+		ret = ft_util_chajoin(ret, ' ');
 	}
-	if (lin[indx - 1] != ' ' && lin[indx - 1] != '>')
-		*ret += 1;
-	if (lin[indx + 1] != ' ' && lin[indx - 1] != '>')
-		*ret += 1;
+	if (lin[*indx + 1] != ' ')
+	{
+		ret = ft_util_chajoin(ret, ' ');
+	}
 	return (1);
 }
 
-int					tocken_cresc(char *lin, int *ret, int indx)
+void				ft_parse_sp_op(char *lin, char *ret, int *i, t_quo *quo)
 {
-	if (indx == 0 || ft_util_strlen(lin) == 1 || lin[indx + 1] == '\0' ||
-			lin[indx + 1] == ';' || lin[indx + 1] == '<' ||
-			lin[indx + 1] == '|' || lin[indx + 1] == '>' ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == '<') ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == ';') ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == '<') ||
-			(lin[indx + 1] == ' ' && lin[indx + 2] == '|'))
-	{
-		err_by_syntax(&g_mns->ext);
-		return (0);
-	}
-	if (lin[indx - 1] != ' ')
-		*ret += 1;
-	if (lin[indx + 1] != ' ')
-		*ret += 1;
-	return (1);
-}
-
-int					ft_count_sp_token(char *lin, int flg)
-{
-	int				ret;
-	int				i;
-
-	if (flg < 0)
-		return (0);
-	ret = 0;
-	i = 0;
-	while (lin[i])
-	{
-		if (lin[i] == ';' && tocken_semi(lin, &ret, i) == 0)
-			return (-1);
-		else if (lin[i] == '|' && tocken_pipe(lin, &ret, i) == 0)
-			return (-1);
-		else if (lin[i] == '>' && tocken_decresc(lin, &ret, i) == 0)
-			return (-1);
-		else if (lin[i] == '<' && tocken_cresc(lin, &ret, i) == 0)
-			return (-1);
-		i++;
-	}
-	return (ret);
+	if (lin[*i] == ';' && tocken_semi(lin, ret, i) == 0)
+		quo->type = -1;
+	else if (lin[*i] == '|' && tocken_pipe(lin, ret, i) == 0)
+		quo->type = -1;
+	else if (lin[*i] == '>' && tocken_decresc(lin, ret, i) == 0)
+		quo->type = -1;
+	else if (lin[*i] == '<' && tocken_cresc(lin, ret, i) == 0)
+		quo->type = -1;
 }

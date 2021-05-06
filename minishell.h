@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/07 01:43:55 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 04:41:46 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@
 # define TYPE_NO 0
 # define TYPE_PIPE 1
 # define TYPE_SEMI 2
+# define CLOSE 0
+# define SINGLE 1
+# define DOUBLE 2
 
 /*
 ** structs
@@ -70,6 +73,7 @@
 
 typedef struct		s_quo
 {
+	int				type;
 	int				d_open;
 	int				s_open;
 }					t_quo;
@@ -186,14 +190,15 @@ t_par				*ft_parse_cmd(char *lin, t_par *par);
 /*
 **	[parse_space.c]
 */
-char				*ft_parse_space(char *lin);
+void				ft_quo_init(t_quo *quo);
+char				*ft_parse_space(char *lin, int i);
 char				*ft_input_lin(char *lin, char *ret, int i, int j);
 void				err_by_syntax(int *ext);
 
 /*
 **	[parse_space_tocken.c]
 */
-int					ft_count_sp_token(char *lin, int flg);
+void				ft_parse_sp_op(char *lin, char *ret, int *i, t_quo *quo);
 int					token_semi(char *lin, int ret, int indx);
 int					token_pipe(char *lin, int ret, int indx);
 int					token_decresc(char *lin, int ret, int indx);

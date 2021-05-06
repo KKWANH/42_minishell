@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 04:10:07 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 16:17:14 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 06:00:36 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,43 +16,41 @@ int					ft_parse_split_count(char *lin)
 {
 	int				idx;
 	int				cnt;
-	int				flg;
 
 	idx = 0;
 	cnt = 0;
-	flg = 1;
 	while (lin[idx])
 	{
 		if (ft_util_is_empty(lin[idx]) == 0)
 		{
-			if (lin[idx] == '"')
+			if (lin[idx] == '\"')
 			{
+				++cnt;
 				++idx;
-				while (lin[idx] && lin[idx] != '"')
+				while (lin[idx] && lin[idx] != '\"')
 					++idx;
+				++idx;
 			}
 			else if (lin[idx] == '\'')
 			{
+				++cnt;
 				++idx;
 				while (lin[idx] && lin[idx] != '\'')
 					++idx;
+				++idx;
 			}
 			else
-				++idx;
-		}
-		else
-		{
-			if (flg == 1)
 			{
 				++cnt;
-				flg = -1;
-			}
-			while (ft_util_is_empty(lin[idx]) == 1)
 				++idx;
-			flg = 1;
+				while (lin[idx] && lin[idx] != '\"' && lin[idx] != '\'' && lin[idx] != ' ')
+					++idx;
+			}
 		}
+		else
+			++idx;
 	}
-	return (cnt + 1);
+	return (cnt);
 }
 
 char				*ft_parse_split_quotes(char *lin, int *jdx)
@@ -64,20 +62,16 @@ char				*ft_parse_split_quotes(char *lin, int *jdx)
 	flg = 0;
 	while (lin[*jdx])
 	{
-		if (lin[*jdx] == '"' || lin[*jdx] == '\'')
+		if (lin[*jdx] == '\"' || lin[*jdx] == '\'')
 		{
-			if (lin[*jdx] == '"' && flg == 0)
+			if (flg == 0)
 				flg = 1;
-			else if (lin[*jdx] == '\'' && flg == 0)
-				flg = 1;
-			else
+			else if (flg == 1)
 				flg = 0;
-			++(*jdx);
 		}
 		if (ft_util_is_empty(lin[*jdx]) == 1 && flg == 0)
 			break ;
-		else
-			rst = ft_util_chajoin(rst, lin[*jdx]);
+		rst = ft_util_chajoin(rst, lin[*jdx]);
 		++(*jdx);
 	}
 	return (rst);

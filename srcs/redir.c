@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/02 17:22:57 by mac               #+#    #+#             */
-/*   Updated: 2021/05/06 17:44:45 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 05:38:13 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void				ft_redir_in(t_par *par, int i)
 		open(par->spl[i + 1], O_RDONLY);
 	if (par->fd_in == -1 || par->fd_out == -1)
 	{
-		printf("minishell: %s: %s\n", par->spl[i + 1], strerror(errno));
 		g_mns->ext = 1;
 		return ;
 	}
