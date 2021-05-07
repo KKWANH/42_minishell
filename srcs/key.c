@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 15:46:58 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 02:24:25 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 07:10:29 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,12 @@ void				ft_key_up(int *col, int *row, char **lin, t_cap *cap)
 	txt = ft_history_up();
 	if (txt == NULL)
 		return ;
-	//기존 인덱스로가서
-	//그앞에껄 지우고
 	tputs(tgoto(cap->cm, cap->p_col, cap->p_row), 1, ft_util_putchar);
 	tputs(cap->ce, 1, ft_util_putchar);
-	//새로 추가할 단어를 올리고, 그에따라 커서랑 인덱스를 옮김
 	ft_util_putstr_fd(txt, 1);
 	*col = cap->p_col + ft_util_strlen(txt);
 	g_mns->idx = -1 + ft_util_strlen(txt);
 	tputs(tgoto(cap->cm, *col, *row), 1, ft_util_putchar);
-	//이에 따라 인풋시킬 변수를 다른걸루 변경
 	free(*lin);
 	*lin = 0;
 	*lin = ft_util_strdup(txt);
@@ -73,16 +69,12 @@ void				ft_key_down(int *col, int *row, char **lin, t_cap *cap)
 	txt = ft_history_down();
 	if (txt == NULL)
 		txt = ft_util_strdup("");
-	//기존 인덱스로가서
-	//그앞에껄 지우고
 	tputs(tgoto(cap->cm, cap->p_col, cap->p_row), 1, ft_util_putchar);
 	tputs(cap->ce, 1, ft_util_putchar);
-	//새로 추가할 단어를 올리고, 그에따라 커서랑 인덱스를 옮김
 	ft_util_putstr_fd(txt, 1);
 	*col = cap->p_col + ft_util_strlen(txt);
 	g_mns->idx = -1 + ft_util_strlen(txt);
 	tputs(tgoto(cap->cm, *col, *row), 1, ft_util_putchar);
-	//이에 따라 인풋시킬 변수를 다른걸루 변경
 	free(*lin);
 	*lin = 0;
 	*lin = ft_util_strdup(txt);

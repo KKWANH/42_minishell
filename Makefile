@@ -6,7 +6,7 @@
 #    By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 11:36:54 by kimkwanho         #+#    #+#              #
-#    Updated: 2021/05/07 04:50:58 by kimkwanho        ###   ########.fr        #
+#    Updated: 2021/05/07 11:39:59 by juhpark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS		=	srcs/init.c \
 				srcs/exe.c \
 				srcs/util_exe.c \
 				srcs/parse.c \
+				srcs/parse2.c \
 				srcs/parse_space.c \
 				srcs/parse_space_token.c \
 				srcs/parse_split.c \

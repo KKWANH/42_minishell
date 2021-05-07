@@ -6,13 +6,11 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/19 14:13:55 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/05 22:01:54 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/07 12:35:26 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// ~는 환경변수 취급 받는듯
 
 t_mns				*g_mns;
 
@@ -34,5 +32,6 @@ void				ft_cd_cmd(t_par *par)
 	}
 	else if (chdir(par->spl[1]) == -1)
 		err_by_chdir(par->spl[1], &g_mns->ext);
-	g_mns->ext = 0;
+	else
+		g_mns->ext = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 16:09:19 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/07 06:00:06 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 10:39:14 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void				ft_quo_init(t_quo *quo)
 	quo->type = CLOSE;
 }
 
-char				*ft_prase_space_quotes(char *lin, int *i, char *str, t_quo *quo)
+char				*ft_prase_space_quotes
+	(char *lin, int *i, char *str, t_quo *quo)
 {
 	str = ft_util_chajoin(str, lin[*i]);
 	if (lin[*i] == '\'')
@@ -51,6 +52,13 @@ char				*ft_prase_space_quotes(char *lin, int *i, char *str, t_quo *quo)
 	return (NULL);
 }
 
+char				*ft_parse_space_sub(char *ret)
+{
+	err_by_syntax(&g_mns->ext);
+	free(ret);
+	return (NULL);
+}
+
 char				*ft_parse_space(char *lin, int i)
 {
 	t_quo			quo;
@@ -60,26 +68,18 @@ char				*ft_parse_space(char *lin, int i)
 	ret = ft_util_strdup("");
 	while (lin[i])
 	{
-		if (quo.type < 0)
-		{
-			err_by_syntax(&g_mns->ext);
-			free(ret);
-			return (0);
-		}
 		if (quo.type == CLOSE && (lin[i] == '\'' || lin[i] == '\"'))
 		{
 			if (!(ret = ft_prase_space_quotes(lin, &i, ret, &quo)))
-			{
-				err_by_syntax(&g_mns->ext);
-				free(ret);
-				return (0);
-			}
+				return (ft_parse_space_sub(ret));
 		}
 		else if (lin[i] == ';' || lin[i] == '|' ||
 			lin[i] == '>' || lin[i] == '<')
-			ft_parse_sp_op(lin, ret, &i, &quo);
+			ret = ft_parse_sp_op(lin, ret, &i, &quo);
 		else
 			ret = ft_util_chajoin(ret, lin[i]);
+		if (quo.type < 0)
+			return (ft_parse_space_sub(ret));
 		++i;
 	}
 	return (ret);

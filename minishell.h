@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/07 04:41:46 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 17:45:32 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@
 # define ANSI_MAG	"\x1b[35m"
 # define ANSI_CYA	"\x1b[36m"
 
-
 /*
 ** key codes
 */
@@ -76,6 +75,10 @@ typedef struct		s_quo
 	int				type;
 	int				d_open;
 	int				s_open;
+	int				j;
+	int				e;
+	char			*n;
+	char			*v;
 }					t_quo;
 
 typedef struct		s_env
@@ -126,7 +129,7 @@ typedef struct		s_mns
 	int				test;
 	int				fst;
 	struct s_cmd	*cmd;
-	struct s_cap	cap; 
+	struct s_cap	cap;
 }					t_mns;
 
 /*
@@ -188,6 +191,13 @@ void				ft_util_close_pipe(t_par *par);
 t_par				*ft_parse_cmd(char *lin, t_par *par);
 
 /*
+**	[parse2.c]
+*/
+void				ft_parse_quotes_big_sub(char **spl, int *i, char *rst);
+void				ft_parse_quotes_sml_sub(char **spl, int *i, char *rst);
+void				ft_parse_split_count_sub_blank(char *lin, int *idx);
+int					ft_parse_process_special_quotes(char **spl, int *idx);
+/*
 **	[parse_space.c]
 */
 void				ft_quo_init(t_quo *quo);
@@ -198,12 +208,11 @@ void				err_by_syntax(int *ext);
 /*
 **	[parse_space_tocken.c]
 */
-void				ft_parse_sp_op(char *lin, char *ret, int *i, t_quo *quo);
+char				*ft_parse_sp_op(char *lin, char *ret, int *i, t_quo *quo);
 int					token_semi(char *lin, int ret, int indx);
 int					token_pipe(char *lin, int ret, int indx);
 int					token_decresc(char *lin, int ret, int indx);
 int					token_cresc(char *lin, int ret, int indx);
-
 
 /*
 **	[parse_split.c]
@@ -293,8 +302,8 @@ void				err_by(char *msg, int *ext);
 int					ft_util_strchr(const char *str, int chr);
 int					ft_util_strlen(char *str);
 void				ft_util_putstr_fd(char *str, int fil);
-char				ft_util_ndlchk(const char *hay, const char *ndl, size_t len);
-char				*ft_util_strnstr(const char *hay, const char *ndl, size_t len);
+char				ft_util_ndlchk(const char *hay, const char *ndl, size_t l);
+char				*ft_util_strnstr(const char *hay, const char *nd, size_t l);
 
 /*
 **	[util2.c]
@@ -312,7 +321,7 @@ int					ft_util_strncmp(const char *s1, const char *s2,
 int					ft_util_is_ascii(int chr);
 char				**ft_util_split_ufailed(char **res, int num);
 char				*ft_util_split_input(char *res, char *s, char c);
-int 				ft_util_split_count(char *s, char c);
+int					ft_util_split_count(char *s, char c);
 char				**ft_util_split(char const *s, char c);
 
 /*
@@ -341,10 +350,5 @@ int					ft_util_atoi(char *str);
 char				**ft_util_strstrjoin(char **spl, char *str);
 size_t				ft_util_itoa_num_length(int nbr);
 char				*ft_util_itoa(int n);
-
-/*
-**	[util7.c]
-*/
-
 
 #endif

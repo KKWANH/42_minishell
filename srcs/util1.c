@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 13:43:01 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/04/08 15:26:03 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 06:47:01 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,19 @@ char				ft_util_ndlchk(const char *hay, const char *ndl, size_t len)
 	return (1);
 }
 
-char				*ft_util_strnstr(const char *hay, const char *ndl, size_t len)
+char				*ft_util_strnstr(const char *hay, const char *nd, size_t ln)
 {
-	if (*ndl == '\0')
+	if (*nd == '\0')
 		return ((char*)hay);
-	while (len != 0 && *hay != 0)
+	while (ln != 0 && *hay != 0)
 	{
-		if (*hay == *ndl)
+		if (*hay == *nd)
 		{
-			if (ft_util_ndlchk(hay, ndl, len) == 1)
+			if (ft_util_ndlchk(hay, nd, ln) == 1)
 				return ((char*)hay);
 		}
 		++hay;
-		--len;
+		--ln;
 	}
 	return (0);
 }

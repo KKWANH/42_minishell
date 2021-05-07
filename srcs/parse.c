@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 15:33:06 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/07 05:59:21 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 17:48:11 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,21 @@ int					ft_parse_quotes_big(char **spl, int *i, int *j)
 	{
 		if (spl[*i][*j] == '\"')
 		{
+			++(*j);
 			if (quo.type == CLOSE)
 			{
 				quo.type = DOUBLE;
-				++(*j);
 				continue ;
 			}
 			else if (quo.type == DOUBLE)
 			{
 				quo.type = CLOSE;
-				++(*j);
 				continue ;
 			}
 		}
-		rst = ft_util_chajoin(rst, spl[*i][*j]);
-		++(*j);
+		rst = ft_util_chajoin(rst, spl[*i][(*j)++]);
 	}
-	free(spl[*i]);
-	spl[*i] = 0;
-	spl[*i] = ft_util_strdup(rst);
-	if (ft_util_strnstr(spl[*i], "$", ft_util_strlen(spl[*i])) != NULL)
-		ft_parse_dollar(i, spl);
+	ft_parse_quotes_big_sub(spl, i, rst);
 	return (0);
 }
 
@@ -60,29 +54,25 @@ int					ft_parse_quotes_sml(char **spl, int *i, int *j)
 	{
 		if (spl[*i][*j] == '\'')
 		{
+			++(*j);
 			if (quo.type == CLOSE)
 			{
 				quo.type = SINGLE;
-				++(*j);
 				continue ;
 			}
 			else if (quo.type == SINGLE)
 			{
 				quo.type = CLOSE;
-				++(*j);
 				continue ;
 			}
 		}
-		rst = ft_util_chajoin(rst, spl[*i][*j]);
-		++(*j);
+		rst = ft_util_chajoin(rst, spl[*i][(*j)++]);
 	}
-	free(spl[*i]);
-	spl[*i] = 0;
-	spl[*i] = ft_util_strdup(rst);
+	ft_parse_quotes_sml_sub(spl, i, rst);
 	return (0);
 }
 
-void				ft_parse_semi(int *jdx, int *idx, t_par **par)
+int					ft_parse_semi(int *jdx, int *idx, t_par **par)
 {
 	t_par *new;
 
@@ -95,38 +85,36 @@ void				ft_parse_semi(int *jdx, int *idx, t_par **par)
 		new->pre = (*par);
 	}
 	*par = new;
+	return (1);
 }
 
 int					ft_parse_process_special
-	(char **spl, t_par **par, int *idx, int *jdx)
+	(char **spl, t_par **par, int *i, int *j)
 {
-	char			*rst;
+	char			*s;
+	int				tmp;
+	int				rst;
 
-//	printf("[[%s]]\n", spl[*idx]);
-	if ((rst = (ft_util_strnstr(spl[*idx], "\"",
-		ft_util_strlen(spl[*idx])))) != NULL)
-		return (ft_parse_quotes_big(spl, idx, jdx));
-	if ((rst = (ft_util_strnstr(spl[*idx], "\'",
-		ft_util_strlen(spl[*idx])))) != NULL)
-		return (ft_parse_quotes_sml(spl, idx, jdx));
-	if ((rst = (ft_util_strnstr(spl[*idx], "$",
-		ft_util_strlen(spl[*idx])))) != NULL)
-		return (ft_parse_dollar(idx, spl));
-	if ((rst = (ft_util_strnstr(spl[*idx], ";",
-		ft_util_strlen(spl[*idx])))) != NULL)
+	tmp = 0;
+	rst = ft_parse_process_special_quotes(spl, i);
+	if ((s = (ft_util_strnstr(spl[*i], "\"", ft_util_strlen(spl[*i])))) != NULL &&
+		rst != -1)
+		return (ft_parse_quotes_big(spl, i, &tmp));
+	if ((s = (ft_util_strnstr(spl[*i], "\'", ft_util_strlen(spl[*i])))) != NULL)
+		return (ft_parse_quotes_sml(spl, i, &tmp));
+	if ((s = (ft_util_strnstr(spl[*i], "$", ft_util_strlen(spl[*i])))) != NULL)
+		return (ft_parse_dollar(i, spl));
+	if ((s = (ft_util_strnstr(spl[*i], ";", ft_util_strlen(spl[*i])))) != NULL)
 	{
-		(*par)->spl[*jdx] = NULL;
+		(*par)->spl[*j] = NULL;
 		(*par)->typ = TYPE_SEMI;
-		ft_parse_semi(jdx, idx, par);
-		return (1);
+		return (ft_parse_semi(j, i, par));
 	}
-	if ((rst = (ft_util_strnstr(spl[*idx], "|",
-		ft_util_strlen(spl[*idx])))) != NULL)
+	if ((s = (ft_util_strnstr(spl[*i], "|", ft_util_strlen(spl[*i])))) != NULL)
 	{
-		(*par)->spl[*jdx] = NULL;
+		(*par)->spl[*j] = NULL;
 		(*par)->typ = TYPE_PIPE;
-		ft_parse_semi(jdx, idx, par);
-		return (1);
+		return (ft_parse_semi(j, i, par));
 	}
 	return (0);
 }
@@ -139,6 +127,7 @@ t_par				*ft_parse_cmd(char *lin, t_par *par)
 	char			*tmp;
 
 	idx = 0;
+	jdx = 0;
 	if (!(tmp = ft_parse_space(lin, 0)))
 		return (0);
 	if (par == NULL)
@@ -147,15 +136,13 @@ t_par				*ft_parse_cmd(char *lin, t_par *par)
 	free(tmp);
 	while (spl[idx])
 	{
-		jdx = 0;
-		// printf("[[%s]]\n", par->spl[idx]);
 		if (ft_parse_process_special(spl, &par, &idx, &jdx) == 1)
 			continue ;
-		par->spl[idx] = ft_util_strdup(spl[idx]);
+		par->spl[jdx] = ft_util_strdup(spl[idx]);
 		++idx;
 		++jdx;
 	}
-	par->spl[idx] = NULL;
+	par->spl[jdx] = NULL;
 	ft_util_parse_list_rewind(&par);
 	ft_util_freestrstr(spl);
 	return (par);

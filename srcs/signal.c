@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:49:18 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 16:52:50 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 12:38:24 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void				ft_signal_handle_rvc_slash(int sig)
 	int				sta;
 	int				pid;
 
+	(void)sig;
 	pid = waitpid(0, &sta, WNOHANG);
 	g_mns->idx = -1;
 	free(g_mns->lin);
@@ -52,10 +53,8 @@ void				ft_signal_handle_rvc_slash(int sig)
 		ft_util_putstr_fd("  \b\b", 1);
 	else
 	{
-		signal(sig, SIG_DFL);
 		ft_util_putstr_fd("Quit: 3\n", 1);
 		g_mns->ext = 131;
-		signal(3, ft_signal_handle_rvc_slash);
 	}
 }
 

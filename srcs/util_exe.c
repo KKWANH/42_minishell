@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:27:11 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/06 17:33:15 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 12:20:14 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,37 +57,25 @@ int					ft_util_is_execable(char *path)
 	return (1);
 }
 
-//파이프는 fil[1]으로 받아서 fil[0]로 나감
-
 void				ft_util_open_pipe(t_par *par)
 {
-	if (par->typ == TYPE_PIPE) //지금 프로세스가 파이프 일때 
+	if (par->typ == TYPE_PIPE)
 	{
-//		printf("input to output\n");
-		dup2(par->fil[1], 1); //stdout 에 fil[1] 을 넘겨주어서 다음 프로세스로 넘겨줌
+		printf("ads\n");
+		dup2(par->fil[1], 1);
 	}
-	if (par->pre && par->pre->typ == TYPE_PIPE) //앞놈이 파이프일때
-	{
-//		printf("output to input\n");
-		dup2(par->pre->fil[0], 0); //앞에 파이프가 있을때 넘겨준 앞부분의 fil[0]을 stdin으로 받음
-	}
+	if (par->pre && par->pre->typ == TYPE_PIPE)
+		dup2(par->pre->fil[0], 0);
 }
 
 void				ft_util_close_pipe(t_par *par)
 {
 	if (par->pip == 1)
 	{
-		close(par->fil[1]); //프로세싱 끝나고 받아둔 파이프는 역할 다했으니 쫑
-//		printf("close1 %d\n", par->fil[1]);
-		if (!par->nxt || par->typ != TYPE_PIPE) //만약 지금 프로세스가 파이프의 맨 마지막 지점아라면
-		{
-			close(par->fil[0]); //맨끝->출력해야하니 파이프 필요없음
-//			printf("close2 %d\n", par->fil[0]);
-		}
+		close(par->fil[1]);
+		if (!par->nxt || par->typ != TYPE_PIPE)
+			close(par->fil[0]);
 	}
-	if (par->pre && par->pre->typ == TYPE_PIPE) //앞부분이 파이프일때 앞 노드에서 fil[1]을 가져와서 다썼으니 끝
-	{
+	if (par->pre && par->pre->typ == TYPE_PIPE)
 		close(par->pre->fil[0]);
-//		printf("close3 %d\n", par->pre->fil[0]);
-	}
 }

@@ -1,14 +1,14 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   export.c                                           :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2021/03/24 15:35:02 by kimkwanho         #+#    #+#             */
-// /*   Updated: 2021/04/11 10:50:57 by kimkwanho        ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/24 15:35:02 by kimkwanho         #+#    #+#             */
+/*   Updated: 2021/05/07 10:42:21 by kimkwanho        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../minishell.h"
 
@@ -44,42 +44,48 @@ void				ft_export_print(void)
 	}
 }
 
+int					ft_export_process_sub(t_quo *qou, char **s, int *i)
+{
+	if (s[*i][(*qou).j] == '=')
+		(*qou).e = 1;
+	else if (ft_util_is_num(s[*i][(*qou).j]) == 1)
+	{
+		if ((*qou).e == 0 && (*qou).j == 0)
+			return (ft_export_err(s[(*i)++]));
+		if ((*qou).e == 0)
+			(*qou).n = ft_util_chajoin((*qou).n, s[*i][(*qou).j]);
+		if ((*qou).e == 1)
+			(*qou).v = ft_util_chajoin((*qou).v, s[*i][(*qou).j]);
+	}
+	else if (ft_util_is_alpha(s[*i][(*qou).j]) == 1)
+	{
+		if ((*qou).e == 0)
+			(*qou).n = ft_util_chajoin((*qou).n, s[*i][(*qou).j]);
+		if ((*qou).e == 1)
+			(*qou).v = ft_util_chajoin((*qou).v, s[*i][(*qou).j]);
+	}
+	else if ((*qou).e == 1)
+		ft_util_chajoin((*qou).v, s[*i][(*qou).j]);
+	return (1);
+}
+
 int					ft_export_process(char **s, int *i, int *f)
 {
-	int				j;
-	int				e;
-	char			*n;
-	char			*v;
+	t_quo			qou;
+	int				rst;
 
-	j = 0;
-	e = 0;
-	n = ft_util_strdup("");
-	v = ft_util_strdup("");
-	while (s[*i][j])
+	qou.j = 0;
+	qou.e = 0;
+	qou.n = ft_util_strdup("");
+	qou.v = ft_util_strdup("");
+	while (s[*i][qou.j])
 	{
-		if (s[*i][j] == '=')
-			e = 1;
-		else if (ft_util_is_num(s[*i][j]) == 1)
-		{
-			if (e == 0 && j == 0)
-				return (ft_export_err(s[(*i)++]));
-			if (e == 0)
-				n = ft_util_chajoin(n, s[*i][j]);
-			if (e == 1)
-				v = ft_util_chajoin(v, s[*i][j]);
-		}
-		else if (ft_util_is_alpha(s[*i][j]) == 1)
-		{
-			if (e == 0)
-				n = ft_util_chajoin(n, s[*i][j]);
-			if (e == 1)
-				v = ft_util_chajoin(v, s[*i][j]);
-		}
-		else if (e == 1)
-			ft_util_chajoin(v, s[*i][j]);
-		++j;
+		rst = ft_export_process_sub(&qou, s, i);
+		if (rst == 0)
+			return (0);
+		++qou.j;
 	}
-	ft_env_add_update(n, v);
+	ft_env_add_update(qou.n, qou.v);
 	(*f) = 1;
 	(*i) += 1;
 	return (1);

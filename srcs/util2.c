@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 08:21:38 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/07 03:30:28 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/07 07:10:41 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,3 @@ int					ft_util_strncmp(const char *s1, const char *s2,
 	}
 	return (0);
 }
-

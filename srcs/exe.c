@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:39:37 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/06 22:51:53 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 11:51:04 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,36 +63,10 @@ void				ft_execve(t_par *par, int res, int sta)
 		if (WIFEXITED(sta))
 			g_mns->ext = WEXITSTATUS(sta);
 	}
-	// pid_t			pid;
-
-	// pid = fork();
-	// if (pid < 0)
-	// 	err_by("err by pid\n", &g_mns->ext);
-	// else if (pid == 0)
-	// {
-	// 	ft_util_open_pipe(par);
-	// 	if (par->fd_in != -2)
-	// 		dup2(par->fd_in, 0);
-	// 	if (par->fd_out != -2)
-	// 		dup2(par->fd_out, 1); //나중에 요 dup부분은 따로 뺴야지~
-	// 	ft_builtin(par);
-	// 	if (par->spl[0][0] == '/')
-	// 		res = execve(par->spl[0], par->spl, g_mns->env_str);
-	// 	else
-	// 		res = ft_execve_nonap(par->spl, 0);
-	// 	if (res < 0)
-	// 		err_by_command(par->spl[0], &g_mns->ext);
-	// }
-	// else if (pid > 0)
-	// {
-	// 	waitpid(pid, &sta, 0);
-	// 	if (WIFEXITED(sta))
-	// 		g_mns->ext = WEXITSTATUS(sta);
-	// }
 }
 
 void				ft_exe_check(t_par *par)
-{		
+{
 	if (ft_builtin_check(par->spl[0]) == 1)
 	{
 		if (par->pip == 0 && ft_util_strcmp(par->spl[0], "exit") == 0)
@@ -110,7 +84,7 @@ void				ft_exe_check(t_par *par)
 	{
 		if (ft_util_is_execable(par->spl[0]))
 			ft_execve(par, 0, 0);
-		else
+		else if (g_mns->ext != 126)
 			err_by_path(par->spl[0], &g_mns->ext);
 	}
 	else if ((ft_util_env_search("PATH")) != 0)

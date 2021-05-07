@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 16:56:32 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/07 00:37:00 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 06:12:27 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int					ft_builtin(t_par *par)
 	else if (ft_util_strcmp(par->spl[0], "exit") == 0)
 		ft_exit_cmd(par);
 	else if (ft_util_strcmp(par->spl[0], "cd") == 0)
-	 	ft_cd_cmd(par);
+		ft_cd_cmd(par);
 	else if (ft_util_strcmp(par->spl[0], "echo") == 0)
 		ft_echo_cmd(par);
 	else if (ft_util_strcmp(par->spl[0], "env") == 0)

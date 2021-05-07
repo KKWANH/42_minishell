@@ -6,11 +6,40 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 04:10:07 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/07 06:00:36 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 11:15:06 by kimkwanho        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void				ft_parse_split_count_sub(char *l, int *i, int *c)
+{
+	if (l[(*i)] == '\"')
+	{
+		++(*c);
+		++(*i);
+		while (l[(*i)] && l[(*i)] != '\"')
+			++(*i);
+		ft_parse_split_count_sub_blank(l, i);
+	}
+	else if (l[(*i)] == '\'')
+	{
+		++(*c);
+		++(*i);
+		while (l[(*i)] && l[(*i)] != '\'')
+			++(*i);
+		ft_parse_split_count_sub_blank(l, i);
+	}
+	else
+	{
+		++(*c);
+		++(*i);
+		while (l[(*i)] && l[(*i)] != '\"' && l[(*i)] != '\'' && l[(*i)] != ' ')
+			++(*i);
+		if (l[(*i)] && (l[(*i)] == '\'' || l[(*i)] == '\"'))
+			--(*c);
+	}
+}
 
 int					ft_parse_split_count(char *lin)
 {
@@ -22,31 +51,7 @@ int					ft_parse_split_count(char *lin)
 	while (lin[idx])
 	{
 		if (ft_util_is_empty(lin[idx]) == 0)
-		{
-			if (lin[idx] == '\"')
-			{
-				++cnt;
-				++idx;
-				while (lin[idx] && lin[idx] != '\"')
-					++idx;
-				++idx;
-			}
-			else if (lin[idx] == '\'')
-			{
-				++cnt;
-				++idx;
-				while (lin[idx] && lin[idx] != '\'')
-					++idx;
-				++idx;
-			}
-			else
-			{
-				++cnt;
-				++idx;
-				while (lin[idx] && lin[idx] != '\"' && lin[idx] != '\'' && lin[idx] != ' ')
-					++idx;
-			}
-		}
+			ft_parse_split_count_sub(lin, &idx, &cnt);
 		else
 			++idx;
 	}
@@ -79,7 +84,7 @@ char				*ft_parse_split_quotes(char *lin, int *jdx)
 
 char				**ft_parse_split_fail(char **rst, int num)
 {
-	int 			idx;
+	int				idx;
 
 	idx = 0;
 	while (idx < num)
