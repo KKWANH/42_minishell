@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/08 14:28:28 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/07 17:45:32 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 18:10:06 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ void				ft_util_close_pipe(t_par *par);
 **	[parse.c]
 */
 t_par				*ft_parse_cmd(char *lin, t_par *par);
+int					ft_parse_semi(int *jdx, int *idx, t_par **par);
 
 /*
 **	[parse2.c]
@@ -196,7 +197,11 @@ t_par				*ft_parse_cmd(char *lin, t_par *par);
 void				ft_parse_quotes_big_sub(char **spl, int *i, char *rst);
 void				ft_parse_quotes_sml_sub(char **spl, int *i, char *rst);
 void				ft_parse_split_count_sub_blank(char *lin, int *idx);
-int					ft_parse_process_special_quotes(char **spl, int *idx);
+int					ft_parse_process_special_quotes
+	(char **spl, int *idx, int sml_qou, int big_qou);
+int					ft_parse_switch_sub
+	(char **spl, int *idx, int *tmp, t_par **par);
+
 /*
 **	[parse_space.c]
 */

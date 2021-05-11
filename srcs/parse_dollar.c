@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 17:43:14 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/07 17:30:54 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 18:30:12 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,26 @@ char				*ft_parse_dollar_process(char *lin, int *jdx, char *str)
 	return (rst);
 }
 
-int					ft_parse_dollar_error(char *lin, int *jdx, char **rst)
+int					ft_parse_dollar_error
+	(char **spl, int *idx, int *jdx, char **rst)
 {
 	char			*tmp;
 	char			*tm2;
 
 	tmp = (*rst);
-	if (lin[(*jdx) + 1] == '?')
+	if (spl[*idx][(*jdx) + 1] == '?')
 	{
 		tm2 = ft_util_itoa(g_mns->ext);
 		(*rst) = ft_util_strjoin(tmp, tm2);
 		(*jdx) += 2;
 		free(tm2);
 		return (-1);
+	}
+	if (ft_util_is_alpha(spl[*idx][(*jdx) + 1]) == 0)
+	{
+		spl[*idx][(*jdx)] = ' ';
+		(*jdx) += 1;
+		return (1);
 	}
 	return (1);
 }
@@ -69,11 +76,9 @@ int					ft_parse_dollar(int *idx, char **spl)
 	rst = ft_util_strdup("");
 	while (spl[*idx][jdx])
 	{
-		if (spl[*idx][jdx] == '$' && ft_util_is_alpha(spl[*idx][jdx + 1]) == 0)
-			spl[*idx][jdx] = ' ';
 		if (spl[*idx][jdx] == '$')
 		{
-			if (ft_parse_dollar_error(spl[*idx], &jdx, &rst) == -1)
+			if (ft_parse_dollar_error(spl, idx, &jdx, &rst) == -1)
 				continue ;
 			rst = ft_parse_dollar_process(spl[*idx], &jdx, rst);
 		}

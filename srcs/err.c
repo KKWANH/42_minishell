@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/16 10:44:14 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/07 12:38:02 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/07 17:53:37 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern t_mns		*g_mns;
 void				err_by_exit(char *arg, int *ext)
 {
 	ft_util_putstr_fd(ANSI_RED "minishell: ", 2);
-	ft_util_putstr_fd(ANSI_MAG "cd: ", 2);
+	ft_util_putstr_fd(ANSI_MAG "exit: ", 2);
 	ft_util_putstr_fd(ANSI_YEL, 2);
 	ft_util_putstr_fd(arg, 2);
 	ft_util_putstr_fd(ANSI_MAG ": Numeric argument required\n", 2);

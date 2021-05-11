@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 15:33:06 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/07 17:48:11 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 18:09:23 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,27 +96,15 @@ int					ft_parse_process_special
 	int				rst;
 
 	tmp = 0;
-	rst = ft_parse_process_special_quotes(spl, i);
-	if ((s = (ft_util_strnstr(spl[*i], "\"", ft_util_strlen(spl[*i])))) != NULL &&
-		rst != -1)
+	rst = ft_parse_process_special_quotes(spl, i, 0, 0);
+	if ((s = (ft_util_strnstr(spl[*i], "\"",
+						ft_util_strlen(spl[*i])))) != NULL && rst != -1)
 		return (ft_parse_quotes_big(spl, i, &tmp));
 	if ((s = (ft_util_strnstr(spl[*i], "\'", ft_util_strlen(spl[*i])))) != NULL)
 		return (ft_parse_quotes_sml(spl, i, &tmp));
 	if ((s = (ft_util_strnstr(spl[*i], "$", ft_util_strlen(spl[*i])))) != NULL)
 		return (ft_parse_dollar(i, spl));
-	if ((s = (ft_util_strnstr(spl[*i], ";", ft_util_strlen(spl[*i])))) != NULL)
-	{
-		(*par)->spl[*j] = NULL;
-		(*par)->typ = TYPE_SEMI;
-		return (ft_parse_semi(j, i, par));
-	}
-	if ((s = (ft_util_strnstr(spl[*i], "|", ft_util_strlen(spl[*i])))) != NULL)
-	{
-		(*par)->spl[*j] = NULL;
-		(*par)->typ = TYPE_PIPE;
-		return (ft_parse_semi(j, i, par));
-	}
-	return (0);
+	return (ft_parse_switch_sub(spl, i, j, par));
 }
 
 t_par				*ft_parse_cmd(char *lin, t_par *par)

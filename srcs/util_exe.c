@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:27:11 by juhpark           #+#    #+#             */
-/*   Updated: 2021/05/07 12:20:14 by juhpark          ###   ########.fr       */
+/*   Updated: 2021/05/07 17:53:21 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ int					ft_util_is_execable(char *path)
 void				ft_util_open_pipe(t_par *par)
 {
 	if (par->typ == TYPE_PIPE)
-	{
-		printf("ads\n");
 		dup2(par->fil[1], 1);
-	}
 	if (par->pre && par->pre->typ == TYPE_PIPE)
 		dup2(par->pre->fil[0], 0);
 }

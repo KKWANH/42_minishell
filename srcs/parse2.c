@@ -6,7 +6,7 @@
 /*   By: kimkwanho <kimkwanho@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/07 10:43:53 by kimkwanho         #+#    #+#             */
-/*   Updated: 2021/05/07 17:46:12 by kimkwanho        ###   ########.fr       */
+/*   Updated: 2021/05/07 18:29:55 by juhpark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,11 @@ void				ft_parse_split_count_sub_blank(char *lin, int *idx)
 	}
 }
 
-int					ft_parse_process_special_quotes(char **spl, int *idx)
+int					ft_parse_process_special_quotes
+	(char **spl, int *idx, int sml_qou, int big_qou)
 {
-	int				sml_qou;
-	int				big_qou;
 	int				jdx;
 
-	sml_qou = CLOSE;
-	big_qou = CLOSE;
 	jdx = 0;
 	while (spl[*idx][jdx])
 	{
@@ -68,4 +65,24 @@ int					ft_parse_process_special_quotes(char **spl, int *idx)
 		++jdx;
 	}
 	return (1);
+}
+
+int					ft_parse_switch_sub
+	(char **spl, int *i, int *j, t_par **par)
+{
+	char			*s;
+
+	if ((s = (ft_util_strnstr(spl[*i], ";", ft_util_strlen(spl[*i])))) != NULL)
+	{
+		(*par)->spl[*j] = NULL;
+		(*par)->typ = TYPE_SEMI;
+		return (ft_parse_semi(j, i, par));
+	}
+	if ((s = (ft_util_strnstr(spl[*i], "|", ft_util_strlen(spl[*i])))) != NULL)
+	{
+		(*par)->spl[*j] = NULL;
+		(*par)->typ = TYPE_PIPE;
+		return (ft_parse_semi(j, i, par));
+	}
+	return (0);
 }
